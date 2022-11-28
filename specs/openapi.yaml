@@ -1,0 +1,20 @@
+swagger: '2.0'
+info:
+  title: Game Service
+  version: '1.0'
+  description: Game Service
+host: 'game-service.petgotchi.io'
+schemes:
+  - https
+  - http
+consumes:
+  - application/json
+  - application/x-www-form-urlencoded
+  - text/plain
+produces:
+  - application/json
+paths:
+  $ref: paths.yaml
+responses:
+  $ref: responses.yaml
+

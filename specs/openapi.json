@@ -1,0 +1,3729 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Game Service",
+    "version": "1.0",
+    "description": "Game Service"
+  },
+  "host": "game-service.petgotchi.io",
+  "schemes": [
+    "https",
+    "http"
+  ],
+  "consumes": [
+    "application/json",
+    "application/x-www-form-urlencoded",
+    "text/plain"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/game-account/login": {
+      "post": {
+        "summary": "01. Login account",
+        "tags": [
+          "Version 0.5"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "accessToken": {
+                    "type": "string"
+                  },
+                  "playerId": {
+                    "required": true,
+                    "type": "string",
+                    "example": null
+                  },
+                  "playerName": {
+                    "required": true,
+                    "type": "string",
+                    "example": "player1"
+                  },
+                  "provider": {
+                    "required": true,
+                    "description": "Provider",
+                    "type": "string",
+                    "example": "Google"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully logged in",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "accessToken": {
+                  "description": "Access Token",
+                  "type": "string",
+                  "example": "xxxxxx"
+                },
+                "expired_at": {
+                  "type": "integer",
+                  "description": "expired at timestamp",
+                  "example": 1698752458
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid name",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/game-account/player-info": {
+      "post": {
+        "summary": "02. Get player info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get player info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "playerInfo": {
+                  "type": "object",
+                  "description": "Player info",
+                  "properties": {
+                    "playerId": {
+                      "type": "string",
+                      "required": true,
+                      "example": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "required": true,
+                      "example": "player1"
+                    },
+                    "authProvided": {
+                      "type": "string",
+                      "required": true,
+                      "example": "google"
+                    },
+                    "createdAt": {
+                      "type": "number",
+                      "description": "timestamp account created (second)",
+                      "example": 1666341899
+                    },
+                    "balance": {
+                      "type": "number",
+                      "required": true,
+                      "example": 777
+                    },
+                    "inventoryCapacity": {
+                      "type": "object",
+                      "required": true,
+                      "properties": {
+                        "consumable": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "permanent": {
+                          "type": "number",
+                          "example": 10
+                        }
+                      }
+                    }
+                  }
+                },
+                "petInfo": {
+                  "type": "object",
+                  "description": "Pet info",
+                  "properties": {
+                    "id": {
+                      "description": "Pet id",
+                      "example": "34234823djfsjfsf"
+                    },
+                    "bodyParts": {
+                      "description": "Body parts of pet",
+                      "example": {
+                        "body_shape": "1",
+                        "leg": "2",
+                        "pattern_color": "2",
+                        "ear": "2",
+                        "tail": "2",
+                        "head_mouth": "2",
+                        "nose": "2",
+                        "eyebrow_eye": "2",
+                        "horn": "2",
+                        "wing": "2"
+                      }
+                    },
+                    "name": {
+                      "description": "Pet name",
+                      "required": true,
+                      "type": "string",
+                      "example": "the-dog"
+                    },
+                    "gender": {
+                      "description": "Pet gender",
+                      "required": true,
+                      "type": "string",
+                      "example": "female"
+                    },
+                    "happiness": {
+                      "description": "Current happiness of pet",
+                      "required": true,
+                      "type": "number",
+                      "example": 97
+                    }
+                  }
+                },
+                "houseInfo": {
+                  "type": "object",
+                  "description": "player's house info",
+                  "properties": {
+                    "id": {
+                      "description": "House ID",
+                      "required": true,
+                      "type": "string",
+                      "example": "21"
+                    },
+                    "playerId": {
+                      "description": "Player ID",
+                      "required": true,
+                      "type": "string",
+                      "example": "21"
+                    },
+                    "name": {
+                      "description": "House name",
+                      "required": true,
+                      "type": "string",
+                      "example": "villa"
+                    },
+                    "lock": {
+                      "type": "object",
+                      "required": true,
+                      "description": "Lock info",
+                      "properties": {
+                        "isLocked": {
+                          "type": "boolean",
+                          "required": true,
+                          "example": true
+                        },
+                        "lockId": {
+                          "type": "string",
+                          "example": "lock1"
+                        },
+                        "lockedAt": {
+                          "type": "number",
+                          "description": "timestamp house locked (second)",
+                          "example": 1699568745
+                        },
+                        "unlockedAt": {
+                          "type": "number",
+                          "description": "timestamp house unlocked (second)",
+                          "example": 1699568945
+                        }
+                      }
+                    },
+                    "location": {
+                      "type": "object",
+                      "description": "lat, long of the house",
+                      "required": true,
+                      "properties": {
+                        "lat": {
+                          "type": "number",
+                          "required": true,
+                          "example": 105
+                        },
+                        "long": {
+                          "type": "number",
+                          "required": true,
+                          "example": 20
+                        }
+                      }
+                    },
+                    "rooms": {
+                      "description": "Rooms info",
+                      "required": true,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "description": "name of room",
+                            "type": "string",
+                            "example": "living room"
+                          },
+                          "size": {
+                            "description": "size of room",
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "description": "x of room",
+                                "type": "number",
+                                "example": 2
+                              },
+                              "y": {
+                                "description": "y of room",
+                                "type": "number",
+                                "example": 2
+                              },
+                              "z": {
+                                "description": "z of room",
+                                "type": "number",
+                                "example": 2
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "decorItems": {
+                      "type": "array",
+                      "description": "decor items in house",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "itemId": {
+                            "type": "string",
+                            "required": true,
+                            "example": "item1"
+                          },
+                          "location": {
+                            "type": "object",
+                            "required": true,
+                            "description": "location of decor item",
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "required": true,
+                                "example": 2
+                              },
+                              "y": {
+                                "type": "number",
+                                "required": true,
+                                "example": 2
+                              },
+                              "z": {
+                                "type": "number",
+                                "required": true,
+                                "example": 2
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid name",
+                      "example": "Incorrect code"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/pets/get-random-pet": {
+      "post": {
+        "summary": "03. Get random pet",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get random pet",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pets": {
+                  "description": "Array of random pets",
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "bodyParts": {
+                        "description": "Body parts of pet",
+                        "required": true,
+                        "type": "object",
+                        "properties": {
+                          "key": {
+                            "description": "Name of body part",
+                            "type": "string"
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "Variant of body part"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": "JLJLFDFDFODFXFDFDD",
+                      "bodyParts": {
+                        "body_shape": "1",
+                        "leg": "2",
+                        "pattern_color": "2",
+                        "ear": "2",
+                        "tail": "2",
+                        "head_mouth": "2",
+                        "nose": "2",
+                        "eyebrow_eye": "2",
+                        "horn": "2",
+                        "wing": "2"
+                      }
+                    },
+                    {
+                      "id": "JLJLFDFDFODFXFDFEE",
+                      "bodyParts": {
+                        "body_shape": "1",
+                        "leg": "2",
+                        "pattern_color": "2",
+                        "ear": "2",
+                        "tail": "2",
+                        "head_mouth": "2",
+                        "nose": "2",
+                        "eyebrow_eye": "2",
+                        "horn": "2",
+                        "wing": "2"
+                      }
+                    },
+                    {
+                      "id": "JLJLFDFDFODFXFDFDD",
+                      "bodyParts": {
+                        "body_shape": "1",
+                        "leg": "2",
+                        "pattern_color": "2",
+                        "ear": "2",
+                        "tail": "2",
+                        "head_mouth": "2",
+                        "nose": "2",
+                        "eyebrow_eye": "2",
+                        "horn": "2",
+                        "wing": "2"
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/pets/pick": {
+      "post": {
+        "summary": "04. Pick a pet to create",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "petInitiationId": {
+                    "description": "Pet initiation id",
+                    "required": true,
+                    "type": "String",
+                    "example": "FJKDJFLDFJDLFJDFF"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successfully created pet",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Successfully message",
+                  "example": "Successfully create pet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid pet",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mystery-boxes/open": {
+      "post": {
+        "summary": "05. Open mystery-boxes",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "boxType": {
+                    "description": "type of mystery-boxes (quiz/ non_quiz)",
+                    "type": "string",
+                    "example": "quiz"
+                  },
+                  "lat": {
+                    "type": "number",
+                    "example": 105
+                  },
+                  "long": {
+                    "type": "number",
+                    "example": 20
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully open mystery-boxes",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "quiz": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "required": true,
+                      "example": "question1"
+                    },
+                    "question": {
+                      "type": "string",
+                      "required": true,
+                      "example": "What time is it ?"
+                    },
+                    "options": {
+                      "type": "array",
+                      "required": true,
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "answer": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "example": [
+                        {
+                          "id": "q1",
+                          "answer": "3h"
+                        },
+                        {
+                          "id": "q2",
+                          "answer": "6h"
+                        },
+                        {
+                          "id": "q3",
+                          "answer": "9h"
+                        },
+                        {
+                          "id": "q4",
+                          "answer": "12h"
+                        }
+                      ]
+                    }
+                  }
+                },
+                "reward": {
+                  "description": "reward of mystery-boxes",
+                  "type": "object",
+                  "properties": {
+                    "coin": {
+                      "type": "number",
+                      "required": true,
+                      "example": 10
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "commonLock"
+                          },
+                          "rarity": {
+                            "type": "string",
+                            "example": "COMMON"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "LOCK"
+                          },
+                          "subcategory": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "attribute": {
+                            "type": "array"
+                          },
+                          "itemId": {
+                            "type": "string",
+                            "example": "635b7a5877894f94dc4f7bef"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "boxId": {
+                  "type": "string",
+                  "required": true,
+                  "example": "636a0b7915b942e005b90298 "
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid mystery-boxes",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mystery-boxes/answer": {
+      "post": {
+        "summary": "06. Submit answer",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "quizId": {
+                    "description": "question ID",
+                    "type": "string",
+                    "example": "question1"
+                  },
+                  "answer": {
+                    "description": "Answer of the quiz",
+                    "type": "string",
+                    "example": "3h"
+                  },
+                  "boxId": {
+                    "type": "string",
+                    "required": true,
+                    "example": "635b7a5877894f94dc4f7b75"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Correct answer",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "reward": {
+                  "description": "reward of mystery-boxes",
+                  "type": "object",
+                  "properties": {
+                    "coin": {
+                      "type": "number",
+                      "required": true,
+                      "example": 10
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "commonLock"
+                          },
+                          "rarity": {
+                            "type": "string",
+                            "example": "COMMON"
+                          },
+                          "category": {
+                            "type": "string",
+                            "example": "LOCK"
+                          },
+                          "subcategory": {
+                            "type": "string",
+                            "example": ""
+                          },
+                          "attribute": {
+                            "type": "array"
+                          },
+                          "itemId": {
+                            "type": "string",
+                            "example": "635b7a5877894f94dc4f7bef"
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "boxId": {
+                  "required": true,
+                  "type": "string",
+                  "example": "635f9d98d117c29742db8833"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Incorrect answer",
+                  "example": "You chose the wrong answer"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/pets/get-profile": {
+      "post": {
+        "summary": "07. Get pet info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "description": "Pet ID",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get pet info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "petInfo": {
+                  "type": "object",
+                  "description": "Info of pet",
+                  "properties": {
+                    "id": {
+                      "description": "Pet ID",
+                      "required": true,
+                      "type": "string",
+                      "example": ""
+                    },
+                    "playerId": {
+                      "description": "Player ID",
+                      "required": true,
+                      "type": "string",
+                      "example": "uiop7890"
+                    },
+                    "bodyParts": {
+                      "description": "Body parts of pet",
+                      "required": true,
+                      "type": "object",
+                      "properties": {
+                        "key": {
+                          "description": "Name of body part",
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "string",
+                          "description": "Variant of body part"
+                        }
+                      },
+                      "example": {
+                        "body_shape": "1",
+                        "leg": "2",
+                        "pattern_color": "2",
+                        "ear": "2",
+                        "tail": "2",
+                        "head_mouth": "2",
+                        "nose": "2",
+                        "eyebrow_eye": "2",
+                        "horn": "2",
+                        "wing": "2"
+                      }
+                    },
+                    "name": {
+                      "description": "Name of pet",
+                      "required": true,
+                      "type": "string",
+                      "example": "the-dog"
+                    },
+                    "gender": {
+                      "description": "Gender of pet",
+                      "required": true,
+                      "type": "string",
+                      "example": "female"
+                    },
+                    "description": {
+                      "description": "Description of pet",
+                      "required": true,
+                      "type": "string",
+                      "example": "Not a normal cat"
+                    },
+                    "happiness": {
+                      "description": "Current happiness of pet",
+                      "required": true,
+                      "type": "number",
+                      "example": 97
+                    },
+                    "lastUpdatedHappiness": {
+                      "description": "Last time happiness of pet has been updated",
+                      "required": true,
+                      "type": "string",
+                      "example": "2022-10-10T10:10:10Z"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid pet ID",
+                      "example": "Incorrect code"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/pets/update-profile": {
+      "post": {
+        "summary": "08. Update pet info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "description": "New name",
+                    "required": true,
+                    "type": "string",
+                    "example": "the-cat"
+                  },
+                  "gender": {
+                    "description": "Gender of pet",
+                    "required": true,
+                    "type": "string",
+                    "example": "female"
+                  },
+                  "description": {
+                    "description": "Description of pet",
+                    "required": true,
+                    "type": "string",
+                    "example": "Not a normal cat"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update pet info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Success message",
+                  "example": "Successfully update pet info"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid gender / Invalid name / Invalid access token",
+                      "example": "Invalid name"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/house/get-house-info": {
+      "post": {
+        "summary": "10. Get house info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "playerId": {
+                    "description": "Player ID",
+                    "required": true,
+                    "type": "string",
+                    "example": ""
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get house info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "houseInfo": {
+                  "type": "object",
+                  "description": "player's house info",
+                  "properties": {
+                    "id": {
+                      "description": "House ID",
+                      "required": true,
+                      "type": "string",
+                      "example": "21"
+                    },
+                    "playerId": {
+                      "description": "Player ID",
+                      "required": true,
+                      "type": "string",
+                      "example": "21"
+                    },
+                    "name": {
+                      "description": "House name",
+                      "required": true,
+                      "type": "string",
+                      "example": "villa"
+                    },
+                    "lock": {
+                      "type": "object",
+                      "required": true,
+                      "description": "Lock info",
+                      "properties": {
+                        "isLocked": {
+                          "type": "boolean",
+                          "required": true,
+                          "example": true
+                        },
+                        "lockId": {
+                          "type": "string",
+                          "example": "lock1"
+                        },
+                        "lockedAt": {
+                          "type": "number",
+                          "description": "timestamp house locked (second)",
+                          "example": 1699568745
+                        },
+                        "unlockedAt": {
+                          "type": "number",
+                          "description": "timestamp house unlocked (second)",
+                          "example": 1699568945
+                        }
+                      }
+                    },
+                    "location": {
+                      "type": "object",
+                      "description": "lat, long of the house",
+                      "required": true,
+                      "properties": {
+                        "lat": {
+                          "type": "number",
+                          "required": true,
+                          "example": 105
+                        },
+                        "long": {
+                          "type": "number",
+                          "required": true,
+                          "example": 20
+                        }
+                      }
+                    },
+                    "rooms": {
+                      "description": "Rooms info",
+                      "required": true,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "description": "name of room",
+                            "type": "string",
+                            "example": "living room"
+                          },
+                          "size": {
+                            "description": "size of room",
+                            "type": "object",
+                            "properties": {
+                              "x": {
+                                "description": "x of room",
+                                "type": "number",
+                                "example": 2
+                              },
+                              "y": {
+                                "description": "y of room",
+                                "type": "number",
+                                "example": 2
+                              },
+                              "z": {
+                                "description": "z of room",
+                                "type": "number",
+                                "example": 2
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "decorItems": {
+                      "type": "array",
+                      "description": "decor items in house",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "itemId": {
+                            "type": "string",
+                            "required": true,
+                            "example": "item1"
+                          },
+                          "location": {
+                            "type": "object",
+                            "required": true,
+                            "description": "location of decor item",
+                            "properties": {
+                              "x": {
+                                "type": "number",
+                                "required": true,
+                                "example": 2
+                              },
+                              "y": {
+                                "type": "number",
+                                "required": true,
+                                "example": 2
+                              },
+                              "z": {
+                                "type": "number",
+                                "required": true,
+                                "example": 2
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    "poop": {
+                      "type": "object",
+                      "properties": {
+                        "playerId": {
+                          "type": "string",
+                          "description": "ID of player give poop",
+                          "example": "player1"
+                        },
+                        "houseOfVictimId": {
+                          "type": "string",
+                          "description": "Victim ID",
+                          "example": "player2"
+                        },
+                        "status": {
+                          "type": "string",
+                          "example": "not_clean"
+                        },
+                        "createdAt": {
+                          "type": "number",
+                          "example": 169853355
+                        },
+                        "updatedAt": {
+                          "type": "number",
+                          "description": "timestamp clean poop",
+                          "example": 169893355
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid player ID / Invalid access token",
+                      "example": "Invalid player ID"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/house/get-list": {
+      "post": {
+        "summary": "11. Get list house in location",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lat": {
+                    "description": "lat",
+                    "required": true,
+                    "type": "number",
+                    "example": 105
+                  },
+                  "long": {
+                    "description": "long",
+                    "required": true,
+                    "type": "number",
+                    "example": 20
+                  },
+                  "radius": {
+                    "description": "radius",
+                    "required": "true,",
+                    "type": "number",
+                    "example": 1
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get list houses in location",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "listHouses": {
+                  "type": "array",
+                  "description": "list houses in location",
+                  "items": {
+                    "type": "object",
+                    "description": "player's house info",
+                    "properties": {
+                      "playerId": {
+                        "description": "Player ID",
+                        "required": true,
+                        "type": "string",
+                        "example": "21"
+                      },
+                      "houseId": {
+                        "description": "House Id",
+                        "required": true,
+                        "type": "string",
+                        "example": "villa"
+                      },
+                      "lat": {
+                        "description": "Latitude",
+                        "type": "number",
+                        "required": true,
+                        "example": 105
+                      },
+                      "long": {
+                        "description": "Longitude",
+                        "type": "number",
+                        "required": true,
+                        "example": 20
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid lat, Invalid long",
+                      "example": "Invalid long"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/house/pin": {
+      "post": {
+        "summary": "12. Pin house",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "lat": {
+                    "description": "lat",
+                    "required": true,
+                    "type": "number",
+                    "example": 105
+                  },
+                  "long": {
+                    "description": "long",
+                    "required": true,
+                    "type": "number",
+                    "example": 20
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully pin house",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Success message",
+                  "example": "Successfully pin house"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid location, Player have already pinned house",
+                      "example": "Invalid location"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/collection/get-item": {
+      "post": {
+        "summary": "13. Get item in collection",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "description": "Filter by type",
+                    "type": "string",
+                    "example": "CONSUMABLE"
+                  },
+                  "category": {
+                    "description": "Filter by category",
+                    "type": "string",
+                    "example": "LOCK"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get items",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "collection": {
+                  "type": "array",
+                  "description": "List item in collection",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "itemId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "number"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "subcategory": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "playerId": "player1",
+                      "itemId": "635b7a5877894f94dc4f7bef",
+                      "quantity": 1,
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subcategory": ""
+                    },
+                    {
+                      "playerId": "player1",
+                      "itemId": "635b7a5877894f94dc4f7b75",
+                      "quantity": 2,
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subcategory": ""
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/players/balance": {
+      "get": {
+        "summary": "14. Get balance of player",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get balance of player",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "balance": {
+                  "type": "number",
+                  "description": "Balance of player",
+                  "required": true,
+                  "example": 700
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mystery-boxes/claim": {
+      "post": {
+        "summary": "15. Claim reward",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "boxId": {
+                    "type": "string",
+                    "required": true,
+                    "example": "635f9d98d117c29742db8833"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully claim reward",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "required": true,
+                  "example": "You've just received 16 coins"
+                },
+                "isCollectionFull": {
+                  "type": "boolean",
+                  "required": true,
+                  "example": false
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Claim reward failed",
+                  "example": "Claim reward failed"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/pet-care/feeding/get-foods": {
+      "get": {
+        "summary": "16. Get list foods",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List foods",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "foods": {
+                  "type": "array",
+                  "description": "List foods",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "description": "Id of item",
+                        "example": "636097fb87803e89283873ee"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name of item",
+                        "example": "Beef"
+                      },
+                      "category": {
+                        "type": "string",
+                        "description": "Category of item",
+                        "example": "Food"
+                      },
+                      "subcategory": {
+                        "type": "string",
+                        "description": "Subcategory",
+                        "example": "meat"
+                      },
+                      "price": {
+                        "type": "string",
+                        "description": "Price of item",
+                        "example": 10
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid pet",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/shop": {
+      "post": {
+        "summary": "17. Get list items in shop",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sortKey": {
+                    "description": "Key sort createdAt , price",
+                    "type": "string",
+                    "example": "createdAt"
+                  },
+                  "sortValue": {
+                    "description": "Value sort 1 or -1",
+                    "type": "number",
+                    "example": 1
+                  },
+                  "category": {
+                    "description": "Category item",
+                    "type": "string",
+                    "example": "comsumable"
+                  },
+                  "subcategory": {
+                    "description": "Subcategory item",
+                    "type": "string",
+                    "example": "lock"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List items in shop",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "itemsOnSale": {
+                  "type": "array",
+                  "description": "List items",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "description": "Id of item",
+                        "example": "636097fb87803e89283873ee"
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name of item",
+                        "example": "Beef"
+                      },
+                      "category": {
+                        "type": "string",
+                        "description": "Category of item",
+                        "example": "Food"
+                      },
+                      "subcategory": {
+                        "type": "string",
+                        "description": "Subcategory",
+                        "example": "meat"
+                      },
+                      "price": {
+                        "type": "string",
+                        "description": "Price of item",
+                        "example": 10
+                      },
+                      "quantity": {
+                        "type": "number",
+                        "description": "Total",
+                        "example": 1
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid pet",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/house/unpublish": {
+      "post": {
+        "summary": "18. Get list house unpublished",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "list house unpublished",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "listHouses": {
+                  "type": "array",
+                  "description": "list house unpublished",
+                  "items": {
+                    "type": "object",
+                    "description": "player's house info",
+                    "properties": {
+                      "type": {
+                        "description": "Type's feature",
+                        "required": true,
+                        "type": "string",
+                        "example": "house"
+                      },
+                      "player_id": {
+                        "description": "Player ID",
+                        "required": true,
+                        "type": "string",
+                        "example": "21"
+                      },
+                      "pet_name": {
+                        "description": "Pet's name player",
+                        "required": "true,",
+                        "type": "string,",
+                        "example": "pet"
+                      },
+                      "lat": {
+                        "description": "Latitude",
+                        "type": "number",
+                        "required": true,
+                        "example": 20
+                      },
+                      "lon": {
+                        "description": "Longitude",
+                        "type": "number",
+                        "required": true,
+                        "example": 105
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid location, Player have already pinned house",
+                      "example": "Invalid location"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mail-box/get-messages-list": {
+      "get": {
+        "summary": "19. Get messages list",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List messages",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "mails": {
+                  "description": "mail sent and received",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "from": {
+                        "type": "string"
+                      },
+                      "to": {
+                        "type": "string"
+                      },
+                      "message": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "items": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": {
+                              "description": "item ID",
+                              "type": "string"
+                            },
+                            "name": {
+                              "description": "item name",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "rarity": {
+                              "description": "item rarity",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "category": {
+                              "description": "item category",
+                              "required": true,
+                              "type": "string"
+                            },
+                            "subCategory": {
+                              "description": "item subcategory",
+                              "required": true,
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "status": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": "635f820e9f7acba18b3242d4",
+                      "from": "player1",
+                      "to": "player2",
+                      "message": "A gift from player1",
+                      "title": "gift",
+                      "status": "sent",
+                      "items": [
+                        {
+                          "id": "635f820e9f7acba18b3242d4",
+                          "name": "lockCommon",
+                          "rarity": "common",
+                          "category": "tools",
+                          "subCategory": "lock"
+                        },
+                        {
+                          "id": "635f820e9f7acbsdfaer23323",
+                          "name": "lockEpic",
+                          "rarity": "epic",
+                          "category": "tools",
+                          "subCategory": "lock"
+                        }
+                      ],
+                      "createdAt": "2022-10-31T08:06:38.058+00:00"
+                    }
+                  ]
+                },
+                "notifications": {
+                  "description": "Notifications",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "body": {
+                        "type": "string"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "link": {
+                        "type": "string"
+                      },
+                      "createdAt": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": "635f820e9f7acba18b3242d4",
+                      "title": "Update",
+                      "body": "Update infomation",
+                      "type": "",
+                      "link": "",
+                      "createdAt": "2022-10-31T08:06:38.058+00:00"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mail-box/read-message": {
+      "post": {
+        "summary": "20. Read a message",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messageId": {
+                    "description": "message ID",
+                    "type": "string",
+                    "example": "635f820e9f7acba18b3242d4"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Read message successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "required": true,
+                  "type": "string",
+                  "example": "635f820e9f7acba18b3242d4"
+                },
+                "from": {
+                  "type": "string",
+                  "required": true,
+                  "example": "player1"
+                },
+                "to": {
+                  "type": "string",
+                  "required": true,
+                  "example": "player2"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "hi"
+                },
+                "message": {
+                  "type": "string",
+                  "example": "hello world"
+                },
+                "items": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "description": "item ID",
+                        "type": "string"
+                      },
+                      "name": {
+                        "description": "item name",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "rarity": {
+                        "description": "item rarity",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "category": {
+                        "description": "item category",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "subCategory": {
+                        "description": "item subcategory",
+                        "required": true,
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": "635f820e9f7acba18b3242d4",
+                      "name": "lockCommon",
+                      "rarity": "common",
+                      "category": "tools",
+                      "subCategory": "lock"
+                    }
+                  ]
+                },
+                "status": {
+                  "type": "string",
+                  "required": true,
+                  "example": "sent"
+                },
+                "createdAt": {
+                  "type": "string",
+                  "required": true,
+                  "example": "2022-10-31T08:06:38.058+00:00"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Invalid message ID",
+                  "example": "Invalid message ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mail-box/delete": {
+      "post": {
+        "summary": "21. Delete all messages",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete messages successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Delete messages successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Invalid access token",
+                  "example": "Invalid access token"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mail-box/get-item-in-message": {
+      "post": {
+        "summary": "22. Get item in message",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "messageId": {
+                    "description": "message ID",
+                    "type": "string",
+                    "example": "635f820e9f7acba18b3242d4"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Get item successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Get items successfully"
+                },
+                "items": {
+                  "description": "List items",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "description": "item ID",
+                        "required": true,
+                        "type": "string",
+                        "example": "635f820e9f7acba18b3242d4"
+                      },
+                      "name": {
+                        "description": "item name",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "rarity": {
+                        "description": "item rarity",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "type": {
+                        "description": "item type",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "category": {
+                        "description": "item category",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "subcategory": {
+                        "description": "item subcategory",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": "635f820e9f7acba18b3242d4",
+                      "name": "lockCommon",
+                      "rarity": "COMMON",
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subcategory": ""
+                    },
+                    {
+                      "id": "635f820e9f7a23rdffsd42d4",
+                      "name": "lockLegendary",
+                      "rarity": "LEGENDARY",
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subcategory": ""
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Invalid message ID",
+                  "example": "Invalid message ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/mail-box/get-all-items": {
+      "get": {
+        "summary": "23. Get all items in messages",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List items",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Get all items successfully"
+                },
+                "items": {
+                  "description": "List items",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "description": "item ID",
+                        "required": true,
+                        "type": "string",
+                        "example": "635f820e9f7acba18b3242d4"
+                      },
+                      "name": {
+                        "description": "item name",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "rarity": {
+                        "description": "item rarity",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "type": {
+                        "description": "item type",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "category": {
+                        "description": "item category",
+                        "required": true,
+                        "type": "string"
+                      },
+                      "subCategory": {
+                        "description": "item subcategory",
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "id": "635f820e9f7acba18b3242d4",
+                      "name": "lockCommon",
+                      "rarity": "COMMON",
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subCategory": ""
+                    },
+                    {
+                      "id": "635f820e9f7a23rdffsd42d4",
+                      "name": "lockLegendary",
+                      "rarity": "LEGENDARY",
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subCategory": ""
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/friend/get-list": {
+      "get": {
+        "summary": "24. Get list friend",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List messages",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "friends": {
+                  "description": "List friend of player",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "playerId": {
+                        "type": "string"
+                      },
+                      "lastLogin": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "avatar": "",
+                      "name": "playerName1",
+                      "playerId": "testplayer1",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    },
+                    {
+                      "avatar": "",
+                      "name": "playerName2",
+                      "playerId": "testplayer2",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/friend/send-request": {
+      "post": {
+        "summary": "25. Send friend request",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "playerId": {
+                    "description": "ID of player received request",
+                    "required": true,
+                    "type": "string",
+                    "example": "player1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Send friend request successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Sent friend request successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Invalid player ID",
+                  "example": "Invalid player ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/friend/get-request-list": {
+      "get": {
+        "summary": "26. Get friend requests list",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List requests",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "receivedRequest": {
+                  "description": "List received requests of player",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "playerId": {
+                        "type": "string"
+                      },
+                      "lastLogin": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "avatar": "",
+                      "name": "playerName1",
+                      "playerId": "testplayer1",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    },
+                    {
+                      "avatar": "",
+                      "name": "playerName2",
+                      "playerId": "testplayer2",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    }
+                  ]
+                },
+                "sentRequest": {
+                  "description": "List sent requests of player",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "playerId": {
+                        "type": "string"
+                      },
+                      "lastLogin": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "avatar": "",
+                      "name": "playerName3",
+                      "playerId": "testplayer3",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    },
+                    {
+                      "avatar": "",
+                      "name": "playerName4",
+                      "playerId": "testplayer4",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/friend/accept-request": {
+      "post": {
+        "summary": "27. Accept friend request",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "playerId": {
+                    "description": "ID of player sent request",
+                    "required": true,
+                    "type": "string",
+                    "example": "player1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Accepted friend request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Accepted friend request"
+                },
+                "friends": {
+                  "description": "List friend of player",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "playerId": {
+                        "type": "string"
+                      },
+                      "lastLogin": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "avatar": "",
+                      "name": "playerName1",
+                      "playerId": "testplayer1",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    },
+                    {
+                      "avatar": "",
+                      "name": "playerName2",
+                      "playerId": "testplayer2",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Invalid player ID",
+                  "example": "Invalid player ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/friend/unfriend": {
+      "post": {
+        "summary": "28. Unfriend",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "playerId": {
+                    "description": "ID of player",
+                    "required": true,
+                    "type": "string",
+                    "example": "player1"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Unfriend successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Unfriend successfully"
+                },
+                "friends": {
+                  "description": "List friend of player",
+                  "type": "Array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "playerId": {
+                        "type": "string"
+                      },
+                      "lastLogin": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "avatar": "",
+                      "name": "playerName1",
+                      "playerId": "testplayer1",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    },
+                    {
+                      "avatar": "",
+                      "name": "playerName2",
+                      "playerId": "testplayer2",
+                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Invalid player ID",
+                  "example": "Invalid player ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/friend/send-message": {
+      "post": {
+        "summary": "29. Send message",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "playerId": {
+                    "description": "ID of player receive message",
+                    "required": true,
+                    "type": "string",
+                    "example": "player2"
+                  },
+                  "message": {
+                    "type": "string",
+                    "example": "A gift from player1"
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "Gift"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "itemId": {
+                          "required": true,
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "example": [
+                      {
+                        "itemId": "635f820e9f7acba18b3242d4"
+                      },
+                      {
+                        "itemId": "635f820e9f7acba18b3adsfe"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Sent message successfully",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Sent message successfully"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Invalid player ID",
+                  "example": "Invalid player ID"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/collection/delete-item": {
+      "$ref": "paths/v1/collection/delete-item/post.yaml"
+    },
+    "/api/v1/collection/add-item": {
+      "post": {
+        "summary": "31. Add items to collection",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "itemId": {
+                    "description": "itemId",
+                    "type": "string",
+                    "example": "635b7a5877894f94dc4f7b75"
+                  },
+                  "quantity": {
+                    "description": "Quantity of item",
+                    "type": "number",
+                    "example": 3
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully add items",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "description": "Add items successfully",
+                  "required": true,
+                  "type": "string",
+                  "example": "Add items successfully"
+                },
+                "collection": {
+                  "type": "array",
+                  "description": "List item in collection",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "itemId": {
+                        "type": "string"
+                      },
+                      "quantity": {
+                        "type": "number"
+                      },
+                      "type": {
+                        "type": "string"
+                      },
+                      "category": {
+                        "type": "string"
+                      },
+                      "subcategory": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "playerId": "player1",
+                      "itemId": "635b7a5877894f94dc4f7b75",
+                      "quantity": 1,
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subcategory": ""
+                    },
+                    {
+                      "playerId": "player1",
+                      "itemId": "635b7a5877894f94dc4f7bef",
+                      "quantity": 2,
+                      "type": "CONSUMABLE",
+                      "category": "LOCK",
+                      "subcategory": ""
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid itemID",
+                      "example": "Invalid itemID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/api/v1/pet-care/feeding": {
+      "post": {
+        "summary": "32. Feeding pet",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "storeId": {
+                    "description": "Store ID when get list item in store with filter category = FOOD",
+                    "type": "string",
+                    "example": "AFSQ1A4FA124"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success feeding",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "playerInfo": {
+                  "type": "object",
+                  "description": "Player info",
+                  "properties": {
+                    "playerId": {
+                      "type": "string",
+                      "required": true,
+                      "example": ""
+                    },
+                    "name": {
+                      "type": "string",
+                      "required": true,
+                      "example": "player1"
+                    },
+                    "authProvided": {
+                      "type": "string",
+                      "required": true,
+                      "example": "google"
+                    },
+                    "createdAt": {
+                      "type": "number",
+                      "description": "timestamp account created (second)",
+                      "example": 1666341899
+                    },
+                    "balance": {
+                      "type": "number",
+                      "required": true,
+                      "example": 777
+                    },
+                    "inventoryCapacity": {
+                      "type": "object",
+                      "required": true,
+                      "properties": {
+                        "consumable": {
+                          "type": "number",
+                          "example": 20
+                        },
+                        "permanent": {
+                          "type": "number",
+                          "example": 10
+                        }
+                      }
+                    }
+                  }
+                },
+                "petInfo": {
+                  "type": "object",
+                  "description": "Pet info",
+                  "properties": {
+                    "id": {
+                      "description": "Pet id",
+                      "example": "34234823djfsjfsf"
+                    },
+                    "bodyParts": {
+                      "description": "Body parts of pet",
+                      "example": {
+                        "body_shape": "1",
+                        "leg": "2",
+                        "pattern_color": "2",
+                        "ear": "2",
+                        "tail": "2",
+                        "head_mouth": "2",
+                        "nose": "2",
+                        "eyebrow_eye": "2",
+                        "horn": "2",
+                        "wing": "2"
+                      }
+                    },
+                    "name": {
+                      "description": "Pet name",
+                      "required": true,
+                      "type": "string",
+                      "example": "the-dog"
+                    },
+                    "gender": {
+                      "description": "Pet gender",
+                      "required": true,
+                      "type": "string",
+                      "example": "female"
+                    },
+                    "happiness": {
+                      "description": "Current happiness of pet",
+                      "required": true,
+                      "type": "number",
+                      "example": 97
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid access token / Invalid pet",
+                      "example": "Invalid access token"
+                    },
+                    "code": {
+                      "type": "integer",
+                      "description": "ERROR_CODE",
+                      "example": 10003
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "OK",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "OK",
+            "example": "OK"
+          }
+        }
+      }
+    },
+    "400": {
+      "description": "Bad request",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Invalid access token / Invalid pet",
+                "example": "Invalid access token"
+              },
+              "code": {
+                "type": "integer",
+                "description": "ERROR_CODE",
+                "example": 10003
+              }
+            }
+          }
+        }
+      }
+    },
+    "401": {
+      "description": "Unauthorized error",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "Unauthorized error",
+                "example": "Unauthorized"
+              },
+              "code": {
+                "type": "integer",
+                "description": "ERROR_CODE",
+                "example": 10003
+              }
+            }
+          }
+        }
+      }
+    },
+    "404": {
+      "description": "Not Found",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "The URL or its content (such as files or images) was either deleted or moved (without adjusting any internal links accordingly)",
+                "example": "Not Found"
+              },
+              "code": {
+                "type": "integer",
+                "description": "ERROR_CODE",
+                "example": 10004
+              }
+            }
+          }
+        }
+      }
+    },
+    "500": {
+      "description": "Internal Server Error",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "message": {
+                "type": "string",
+                "description": "generic error response",
+                "example": "Internal Server Error"
+              },
+              "code": {
+                "type": "integer",
+                "description": "ERROR_CODE",
+                "example": 10005
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

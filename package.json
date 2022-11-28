@@ -1,0 +1,18 @@
+{
+  "name": "game-service-documents",
+  "version": "1.0.0",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "specs": "cd specs && multi-file-swagger openapi.yaml > openapi.json && redoc-cli serve openapi.json -p 5001 --template template.html",
+    "specs-build": "cd specs && multi-file-swagger openapi.yaml > openapi.json && redoc-cli bundle openapi.json -o documentation.html --title 'Game Service API docs'"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@redocly/openapi-cli": "^1.0.0-beta.95",
+    "multi-file-swagger": "^2.3.0",
+    "redoc-cli": "^0.13.11"
+  }
+}

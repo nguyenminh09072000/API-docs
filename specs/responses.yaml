@@ -1,0 +1,76 @@
+200:
+  description: OK
+  schema:
+    type: object
+    properties:
+      message:
+        type: string
+        description: OK
+        example: OK
+400:
+  description: Bad request
+  schema:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Invalid access token / Invalid pet
+            example: Invalid access token
+          code:
+            type: integer
+            description: ERROR_CODE
+            example: 10003
+
+401:
+  description:  Unauthorized error
+  schema:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Unauthorized error
+            example: Unauthorized
+          code:
+            type: integer
+            description: ERROR_CODE
+            example: 10003
+
+404:
+  description:  Not Found
+  schema:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          message:
+            type: string
+            description: The URL or its content (such as files or images) was either deleted or moved (without adjusting any internal links accordingly)
+            example: Not Found
+          code:
+            type: integer
+            description: ERROR_CODE
+            example: 10004
+
+500:
+  description:  Internal Server Error
+  schema:
+    type: object
+    properties:
+      error:
+        type: object
+        properties:
+          message:
+            type: string
+            description: generic error response
+            example: Internal Server Error
+          code:
+            type: integer
+            description: ERROR_CODE
+            example: 10005

@@ -1,0 +1,123 @@
+#1
+/api/v1/game-account/login:
+  $ref: paths/v1/game-account/login/post.yaml
+
+#2
+/api/v1/game-account/player-info:
+  $ref: paths/v1/game-account/player-info/post.yaml
+
+#3
+/api/v1/pets/get-random-pet:
+  $ref: paths/v1/pet-create/random/post.yaml
+
+#4
+/api/v1/pets/pick:
+  $ref: paths/v1/pet-create/pick/post.yaml
+
+#5
+/api/v1/mystery-boxes/open:
+  $ref: paths/v1/mystery-boxes/open/post.yaml
+
+#6
+/api/v1/mystery-boxes/answer:
+  $ref: paths/v1/mystery-boxes/answer/post.yaml
+
+#7
+/api/v1/pets/get-profile:
+  $ref: paths/v1/pet-profile/get/post.yaml
+
+#8
+/api/v1/pets/update-profile:
+  $ref: paths/v1/pet-profile/update/post.yaml
+
+#9
+/api/v1/house/get-house-info:
+  $ref: paths/v1/house/get-house-info/post.yaml
+
+#10
+/api/v1/house/get-list:
+  $ref: paths/v1/house/get-list/post.yaml
+
+#11
+/api/v1/house/pin:
+  $ref: paths/v1/house/pin/post.yaml
+
+#12
+/api/v1/collection/get-item:
+  $ref: paths/v1/collection/get-item/post.yaml
+
+#13
+/api/v1/players/balance:
+  $ref: paths/v1/player/balance/get.yaml
+
+#14
+/api/v1/mystery-boxes/claim:
+  $ref: paths/v1/mystery-boxes/claim/post.yaml
+
+#15
+/api/v1/pet-care/feeding/get-foods:
+  $ref: paths/v1/pet-care/feeding/get-foods/get.yaml
+
+#16
+/api/v1/shop:
+  $ref: paths/v1/shop/post.yaml
+
+#17
+/api/v1/house/unpublish:
+  $ref: paths/v1/house/unpublish/get.yaml
+
+#18
+/api/v1/mail-box/get-messages-list:
+  $ref: paths/v1/mail-box/get-messages-list/get.yaml
+
+#19
+/api/v1/mail-box/read-message:
+  $ref: paths/v1/mail-box/read-message/post.yaml
+
+#20
+/api/v1/mail-box/delete:
+  $ref: paths/v1/mail-box/delete/post.yaml
+
+#21
+/api/v1/mail-box/get-item-in-message:
+  $ref: paths/v1/mail-box/get-item-in-message/post.yaml
+
+#22
+/api/v1/mail-box/get-all-items:
+  $ref: paths/v1/mail-box/get-all-items/get.yaml
+
+#24
+/api/v1/friend/get-list:
+  $ref: paths/v1/friend/get-list/get.yaml
+
+#25
+/api/v1/friend/send-request:
+  $ref: paths/v1/friend/send-request/post.yaml
+
+#26
+/api/v1/friend/get-request-list:
+  $ref: paths/v1/friend/get-request-list/get.yaml
+
+#27
+/api/v1/friend/accept-request:
+  $ref: paths/v1/friend/accept-request/post.yaml
+
+#28
+/api/v1/friend/unfriend:
+  $ref: paths/v1/friend/unfriend/post.yaml
+
+#29
+/api/v1/friend/send-message:
+  $ref: paths/v1/friend/send-message/post.yaml
+
+#30
+/api/v1/collection/delete-item:
+  $ref: paths/v1/collection/delete-item/post.yaml
+
+#31
+/api/v1/collection/add-item:
+  $ref: paths/v1/collection/add-item/post.yaml
+
+#32
+/api/v1/pet-care/feeding:
+  $ref: paths/v1/pet-care/feeding/post.yaml
