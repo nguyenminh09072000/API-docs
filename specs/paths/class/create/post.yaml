@@ -1,0 +1,71 @@
+post:
+    summary: 15. Create class
+    tags:
+        - Version 0.5
+    parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: Access token
+
+    requestBody:
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        classId:
+                            type: string
+                            example: '975985'
+                        subjectId:
+                            type: string
+                            example: 'IT-3000'
+                        teacherId:
+                            type: string
+                            example: '0001'
+                        locationName:
+                            type: string
+                            example: 'TC-101'
+                        classBusyTime:
+                            type: array
+                            example: [1, 2, 3]
+
+    responses:
+        200:
+            description: Successfully create class
+            schema:
+                type: object
+                properties:
+                    classId:
+                        type: string
+                        example: '975985'
+                    subjectId:
+                        type: string
+                        example: 'IT-3000'
+                    teacherId:
+                        type: string
+                        example: '0001'
+                    locationName:
+                        type: string
+                        example: 'TC-101'
+                    classBusyTime:
+                        type: array
+                        example: [ 1, 2, 3 ]
+
+        400:
+            description: Bad request
+            schema:
+                type: object
+                properties:
+                    error:
+                        type: object
+                        properties:
+                            message:
+                                type: string
+                                description: Invalid class ID
+                                example: Invalid class ID
+        404:
+            $ref: '#/responses/404'
+        500:
+            $ref: '#/responses/500'

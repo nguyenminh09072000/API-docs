@@ -1,0 +1,66 @@
+post:
+    summary: 7. Create teacher
+    tags:
+        - Version 0.5
+    parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: Access token
+
+    requestBody:
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        teacherId:
+                            description: teacher ID
+                            type: string
+                            example: '0001'
+                        teacherName:
+                            description: teacherName
+                            type: string
+                            example: 'Nguyen Van A'
+                        accountId:
+                            type: string
+                            example: '6a5dfwegfdfgstheyqf'
+
+    responses:
+        200:
+            description: Successfully create teacher
+            schema:
+                type: object
+                properties:
+                    teacherId:
+                        description: teacher ID
+                        type: string
+                        example: '0001'
+                    teacherName:
+                        description: teacherName
+                        type: string
+                        example: 'Nguyen Van A'
+                    accountId:
+                        type: string
+                        example: '6a5dfwegfdfgstheyqf'
+                    teacherBusyTime:
+                        type: array
+                        example: []
+
+        400:
+            description: Bad request
+            schema:
+                type: object
+                properties:
+                    error:
+                        type: object
+                        properties:
+                            message:
+                                type: string
+                                description: Invalid teacher ID
+                                example: Invalid teacher ID
+        404:
+            $ref: '#/responses/404'
+        500:
+            $ref: '#/responses/500'

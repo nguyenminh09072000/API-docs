@@ -1,0 +1,70 @@
+post:
+    summary: 3. Create student info
+    tags:
+        - Version 0.5
+    parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: Access token
+
+    requestBody:
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        studentId:
+                            description: data update of student ID
+                            type: string
+                            example: '20183592'
+                        studentName:
+                            description: data update of student name
+                            type: string
+                            example: 'Nguyen Nhat Minh'
+                        accountId:
+                            type: string
+                            example: '6a5dfwegfdfgstheyqf'
+
+    responses:
+        200:
+            description: Successfully create student
+            schema:
+                type: object
+                properties:
+                    studentId:
+                        description: Student ID
+                        required: true
+                        type: string
+                        example: '20183592'
+                    studentName:
+                        description: Student Name
+                        required: true
+                        type: string
+                        example: 'Nguyen Nhat Minh'
+                    accountId:
+                        description: account Id
+                        required: true
+                        type: string
+                        example: '6a5dfwegfdfgstheyqf'
+                    studentBusyTime:
+                        type: array
+                        example: []
+
+        400:
+            description: Bad request
+            schema:
+                type: object
+                properties:
+                    error:
+                        type: object
+                        properties:
+                            message:
+                                type: string
+                                description: Invalid student ID
+                                example: Invalid student ID
+        404:
+            $ref: '#/responses/404'
+        500:
+            $ref: '#/responses/500'

@@ -1,0 +1,59 @@
+post:
+    summary: 11. Create subject
+    tags:
+        - Version 0.5
+    parameters:
+        - in: header
+          name: Authorization
+          type: string
+          required: true
+          description: Access token
+
+    requestBody:
+        content:
+            application/json:
+                schema:
+                    type: object
+                    properties:
+                        subjectId:
+                            type: string
+                            example: 'IT3000'
+                        subjectName:
+                            type: string
+                            example: 'Thuat toan ung dung'
+                        credit:
+                            type: number
+                            example: '3'
+
+    responses:
+        200:
+            description: Successfully create subject
+            schema:
+                type: object
+                properties:
+                subjectId:
+                    type: string
+                    example: 'IT3000'
+                subjectName:
+                    type: string
+                    example: 'Thuat toan ung dung'
+                credit:
+                    type: number
+                    example: '3'
+
+        400:
+            description: Bad request
+            schema:
+                type: object
+                properties:
+                    error:
+                        type: object
+                        properties:
+                            message:
+                                type: string
+                                description: Invalid subject ID
+                                example: Invalid subject ID
+        404:
+            $ref: '#/responses/404'
+        500:
+            $ref: '#/responses/500'

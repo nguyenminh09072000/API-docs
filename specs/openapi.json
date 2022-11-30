@@ -19,11 +19,20 @@
     "application/json"
   ],
   "paths": {
-    "/api/v1/game-account/login": {
-      "post": {
-        "summary": "01. Login account",
+    "/student/get": {
+      "get": {
+        "summary": "1. Get student info",
         "tags": [
           "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
         ],
         "requestBody": {
           "content": {
@@ -31,24 +40,10 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "accessToken": {
-                    "type": "string"
-                  },
-                  "playerId": {
-                    "required": true,
+                  "studentId": {
+                    "description": "student ID",
                     "type": "string",
-                    "example": null
-                  },
-                  "playerName": {
-                    "required": true,
-                    "type": "string",
-                    "example": "player1"
-                  },
-                  "provider": {
-                    "required": true,
-                    "description": "Provider",
-                    "type": "string",
-                    "example": "Google"
+                    "example": "20183592"
                   }
                 }
               }
@@ -57,431 +52,37 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully logged in",
+            "description": "Successfully get student info",
             "schema": {
               "type": "object",
               "properties": {
-                "accessToken": {
-                  "description": "Access Token",
+                "studentId": {
+                  "description": "Student ID",
+                  "required": true,
                   "type": "string",
-                  "example": "xxxxxx"
+                  "example": "20183592"
                 },
-                "expired_at": {
-                  "type": "integer",
-                  "description": "expired at timestamp",
-                  "example": 1698752458
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid access token / Invalid name",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/game-account/player-info": {
-      "post": {
-        "summary": "02. Get player info",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully get player info",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "playerInfo": {
-                  "type": "object",
-                  "description": "Player info",
-                  "properties": {
-                    "playerId": {
-                      "type": "string",
-                      "required": true,
-                      "example": ""
-                    },
-                    "name": {
-                      "type": "string",
-                      "required": true,
-                      "example": "player1"
-                    },
-                    "authProvided": {
-                      "type": "string",
-                      "required": true,
-                      "example": "google"
-                    },
-                    "createdAt": {
-                      "type": "number",
-                      "description": "timestamp account created (second)",
-                      "example": 1666341899
-                    },
-                    "balance": {
-                      "type": "number",
-                      "required": true,
-                      "example": 777
-                    },
-                    "inventoryCapacity": {
-                      "type": "object",
-                      "required": true,
-                      "properties": {
-                        "consumable": {
-                          "type": "number",
-                          "example": 20
-                        },
-                        "permanent": {
-                          "type": "number",
-                          "example": 10
-                        }
-                      }
-                    }
-                  }
+                "studentName": {
+                  "description": "Student Name",
+                  "required": true,
+                  "type": "string",
+                  "example": "Nguyen Nhat Minh"
                 },
-                "petInfo": {
-                  "type": "object",
-                  "description": "Pet info",
-                  "properties": {
-                    "id": {
-                      "description": "Pet id",
-                      "example": "34234823djfsjfsf"
-                    },
-                    "bodyParts": {
-                      "description": "Body parts of pet",
-                      "example": {
-                        "body_shape": "1",
-                        "leg": "2",
-                        "pattern_color": "2",
-                        "ear": "2",
-                        "tail": "2",
-                        "head_mouth": "2",
-                        "nose": "2",
-                        "eyebrow_eye": "2",
-                        "horn": "2",
-                        "wing": "2"
-                      }
-                    },
-                    "name": {
-                      "description": "Pet name",
-                      "required": true,
-                      "type": "string",
-                      "example": "the-dog"
-                    },
-                    "gender": {
-                      "description": "Pet gender",
-                      "required": true,
-                      "type": "string",
-                      "example": "female"
-                    },
-                    "happiness": {
-                      "description": "Current happiness of pet",
-                      "required": true,
-                      "type": "number",
-                      "example": 97
-                    }
-                  }
+                "accountId": {
+                  "description": "account Id",
+                  "required": true,
+                  "type": "string",
+                  "example": "asdf34t245yhtyene"
                 },
-                "houseInfo": {
-                  "type": "object",
-                  "description": "player's house info",
-                  "properties": {
-                    "id": {
-                      "description": "House ID",
-                      "required": true,
-                      "type": "string",
-                      "example": "21"
-                    },
-                    "playerId": {
-                      "description": "Player ID",
-                      "required": true,
-                      "type": "string",
-                      "example": "21"
-                    },
-                    "name": {
-                      "description": "House name",
-                      "required": true,
-                      "type": "string",
-                      "example": "villa"
-                    },
-                    "lock": {
-                      "type": "object",
-                      "required": true,
-                      "description": "Lock info",
-                      "properties": {
-                        "isLocked": {
-                          "type": "boolean",
-                          "required": true,
-                          "example": true
-                        },
-                        "lockId": {
-                          "type": "string",
-                          "example": "lock1"
-                        },
-                        "lockedAt": {
-                          "type": "number",
-                          "description": "timestamp house locked (second)",
-                          "example": 1699568745
-                        },
-                        "unlockedAt": {
-                          "type": "number",
-                          "description": "timestamp house unlocked (second)",
-                          "example": 1699568945
-                        }
-                      }
-                    },
-                    "location": {
-                      "type": "object",
-                      "description": "lat, long of the house",
-                      "required": true,
-                      "properties": {
-                        "lat": {
-                          "type": "number",
-                          "required": true,
-                          "example": 105
-                        },
-                        "long": {
-                          "type": "number",
-                          "required": true,
-                          "example": 20
-                        }
-                      }
-                    },
-                    "rooms": {
-                      "description": "Rooms info",
-                      "required": true,
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "description": "name of room",
-                            "type": "string",
-                            "example": "living room"
-                          },
-                          "size": {
-                            "description": "size of room",
-                            "type": "object",
-                            "properties": {
-                              "x": {
-                                "description": "x of room",
-                                "type": "number",
-                                "example": 2
-                              },
-                              "y": {
-                                "description": "y of room",
-                                "type": "number",
-                                "example": 2
-                              },
-                              "z": {
-                                "description": "z of room",
-                                "type": "number",
-                                "example": 2
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "decorItems": {
-                      "type": "array",
-                      "description": "decor items in house",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "itemId": {
-                            "type": "string",
-                            "required": true,
-                            "example": "item1"
-                          },
-                          "location": {
-                            "type": "object",
-                            "required": true,
-                            "description": "location of decor item",
-                            "properties": {
-                              "x": {
-                                "type": "number",
-                                "required": true,
-                                "example": 2
-                              },
-                              "y": {
-                                "type": "number",
-                                "required": true,
-                                "example": 2
-                              },
-                              "z": {
-                                "type": "number",
-                                "required": true,
-                                "example": 2
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid access token / Invalid name",
-                      "example": "Incorrect code"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/pets/get-random-pet": {
-      "post": {
-        "summary": "03. Get random pet",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successfully get random pet",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "pets": {
-                  "description": "Array of random pets",
+                "studentBusyTime": {
                   "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "bodyParts": {
-                        "description": "Body parts of pet",
-                        "required": true,
-                        "type": "object",
-                        "properties": {
-                          "key": {
-                            "description": "Name of body part",
-                            "type": "string"
-                          },
-                          "value": {
-                            "type": "string",
-                            "description": "Variant of body part"
-                          }
-                        }
-                      }
-                    }
-                  },
                   "example": [
-                    {
-                      "id": "JLJLFDFDFODFXFDFDD",
-                      "bodyParts": {
-                        "body_shape": "1",
-                        "leg": "2",
-                        "pattern_color": "2",
-                        "ear": "2",
-                        "tail": "2",
-                        "head_mouth": "2",
-                        "nose": "2",
-                        "eyebrow_eye": "2",
-                        "horn": "2",
-                        "wing": "2"
-                      }
-                    },
-                    {
-                      "id": "JLJLFDFDFODFXFDFEE",
-                      "bodyParts": {
-                        "body_shape": "1",
-                        "leg": "2",
-                        "pattern_color": "2",
-                        "ear": "2",
-                        "tail": "2",
-                        "head_mouth": "2",
-                        "nose": "2",
-                        "eyebrow_eye": "2",
-                        "horn": "2",
-                        "wing": "2"
-                      }
-                    },
-                    {
-                      "id": "JLJLFDFDFODFXFDFDD",
-                      "bodyParts": {
-                        "body_shape": "1",
-                        "leg": "2",
-                        "pattern_color": "2",
-                        "ear": "2",
-                        "tail": "2",
-                        "head_mouth": "2",
-                        "nose": "2",
-                        "eyebrow_eye": "2",
-                        "horn": "2",
-                        "wing": "2"
-                      }
-                    }
+                    1,
+                    2,
+                    3,
+                    10,
+                    11,
+                    12
                   ]
                 }
               }
@@ -497,13 +98,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid student ID",
+                      "example": "Invalid student ID"
                     }
                   }
                 }
@@ -519,9 +115,9 @@
         }
       }
     },
-    "/api/v1/pets/pick": {
+    "/student/update": {
       "post": {
-        "summary": "04. Pick a pet to create",
+        "summary": "2. Update student info",
         "tags": [
           "Version 0.5"
         ],
@@ -540,11 +136,15 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "petInitiationId": {
-                    "description": "Pet initiation id",
-                    "required": true,
-                    "type": "String",
-                    "example": "FJKDJFLDFJDLFJDFF"
+                  "studentId": {
+                    "description": "data update of student ID",
+                    "type": "string",
+                    "example": "20183592"
+                  },
+                  "studentName": {
+                    "description": "data update of student name",
+                    "type": "string",
+                    "example": "Nguyen Nhat Minh 2"
                   }
                 }
               }
@@ -552,15 +152,14 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Successfully created pet",
+          "200": {
+            "description": "Successfully update info",
             "schema": {
               "type": "object",
               "properties": {
                 "message": {
                   "type": "string",
-                  "description": "Successfully message",
-                  "example": "Successfully create pet"
+                  "example": "Successful"
                 }
               }
             }
@@ -575,13 +174,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token / Invalid pet",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid student ID",
+                      "example": "Invalid student ID"
                     }
                   }
                 }
@@ -597,9 +191,9 @@
         }
       }
     },
-    "/api/v1/mystery-boxes/open": {
+    "/student/create": {
       "post": {
-        "summary": "05. Open mystery-boxes",
+        "summary": "3. Create student info",
         "tags": [
           "Version 0.5"
         ],
@@ -618,18 +212,19 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "boxType": {
-                    "description": "type of mystery-boxes (quiz/ non_quiz)",
+                  "studentId": {
+                    "description": "data update of student ID",
                     "type": "string",
-                    "example": "quiz"
+                    "example": "20183592"
                   },
-                  "lat": {
-                    "type": "number",
-                    "example": 105
+                  "studentName": {
+                    "description": "data update of student name",
+                    "type": "string",
+                    "example": "Nguyen Nhat Minh"
                   },
-                  "long": {
-                    "type": "number",
-                    "example": 20
+                  "accountId": {
+                    "type": "string",
+                    "example": "6a5dfwegfdfgstheyqf"
                   }
                 }
               }
@@ -638,1022 +233,226 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully open mystery-boxes",
+            "description": "Successfully create student",
             "schema": {
               "type": "object",
               "properties": {
-                "quiz": {
+                "studentId": {
+                  "description": "Student ID",
+                  "required": true,
+                  "type": "string",
+                  "example": "20183592"
+                },
+                "studentName": {
+                  "description": "Student Name",
+                  "required": true,
+                  "type": "string",
+                  "example": "Nguyen Nhat Minh"
+                },
+                "accountId": {
+                  "description": "account Id",
+                  "required": true,
+                  "type": "string",
+                  "example": "6a5dfwegfdfgstheyqf"
+                },
+                "studentBusyTime": {
+                  "type": "array",
+                  "example": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
                   "type": "object",
                   "properties": {
-                    "id": {
+                    "message": {
                       "type": "string",
-                      "required": true,
-                      "example": "question1"
-                    },
-                    "question": {
+                      "description": "Invalid student ID",
+                      "example": "Invalid student ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/student/delete": {
+      "post": {
+        "summary": "4. Delete student info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentId": {
+                    "description": "data update of student ID",
+                    "type": "string",
+                    "example": "20183592"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully delete info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successful"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
                       "type": "string",
-                      "required": true,
-                      "example": "What time is it ?"
+                      "description": "Invalid student ID",
+                      "example": "Invalid student ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/teacher/get": {
+      "get": {
+        "summary": "5. Get teacher info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "teacherId": {
+                    "description": "teacher ID",
+                    "type": "string",
+                    "example": "0001"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get teacher info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teacherId": {
+                  "description": "teacher ID",
+                  "required": true,
+                  "type": "string",
+                  "example": "0001"
+                },
+                "teacherName": {
+                  "description": "Teacher Name",
+                  "required": true,
+                  "type": "string",
+                  "example": "Pham Van Hai"
+                },
+                "accountId": {
+                  "description": "account Id",
+                  "required": true,
+                  "type": "string",
+                  "example": "asdf34t245yhtyene"
+                },
+                "teacherBusyTime": {
+                  "type": "array",
+                  "example": [
+                    1,
+                    2,
+                    3,
+                    10,
+                    11,
+                    12
+                  ]
+                },
+                "teacherClasses": {
+                  "type": "array",
+                  "items": {
+                    "classId": {
+                      "type": "string"
                     },
-                    "options": {
-                      "type": "array",
-                      "required": true,
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "answer": {
-                            "type": "string"
-                          }
-                        }
-                      },
-                      "example": [
-                        {
-                          "id": "q1",
-                          "answer": "3h"
-                        },
-                        {
-                          "id": "q2",
-                          "answer": "6h"
-                        },
-                        {
-                          "id": "q3",
-                          "answer": "9h"
-                        },
-                        {
-                          "id": "q4",
-                          "answer": "12h"
-                        }
+                    "subjectId": {
+                      "type": "string"
+                    },
+                    "locationName": {
+                      "type": "string"
+                    },
+                    "classBusyTime": {
+                      "type": "array"
+                    }
+                  },
+                  "example": [
+                    {
+                      "classId": "589584",
+                      "subjectId": "IT3150",
+                      "locationName": "TC-101",
+                      "classBusyTime": [
+                        1,
+                        2,
+                        3
                       ]
                     }
-                  }
-                },
-                "reward": {
-                  "description": "reward of mystery-boxes",
-                  "type": "object",
-                  "properties": {
-                    "coin": {
-                      "type": "number",
-                      "required": true,
-                      "example": 10
-                    },
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "example": "commonLock"
-                          },
-                          "rarity": {
-                            "type": "string",
-                            "example": "COMMON"
-                          },
-                          "category": {
-                            "type": "string",
-                            "example": "LOCK"
-                          },
-                          "subcategory": {
-                            "type": "string",
-                            "example": ""
-                          },
-                          "attribute": {
-                            "type": "array"
-                          },
-                          "itemId": {
-                            "type": "string",
-                            "example": "635b7a5877894f94dc4f7bef"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "boxId": {
-                  "type": "string",
-                  "required": true,
-                  "example": "636a0b7915b942e005b90298 "
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid access token / Invalid mystery-boxes",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/mystery-boxes/answer": {
-      "post": {
-        "summary": "06. Submit answer",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "quizId": {
-                    "description": "question ID",
-                    "type": "string",
-                    "example": "question1"
-                  },
-                  "answer": {
-                    "description": "Answer of the quiz",
-                    "type": "string",
-                    "example": "3h"
-                  },
-                  "boxId": {
-                    "type": "string",
-                    "required": true,
-                    "example": "635b7a5877894f94dc4f7b75"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Correct answer",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "reward": {
-                  "description": "reward of mystery-boxes",
-                  "type": "object",
-                  "properties": {
-                    "coin": {
-                      "type": "number",
-                      "required": true,
-                      "example": 10
-                    },
-                    "items": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "type": "string",
-                            "example": "commonLock"
-                          },
-                          "rarity": {
-                            "type": "string",
-                            "example": "COMMON"
-                          },
-                          "category": {
-                            "type": "string",
-                            "example": "LOCK"
-                          },
-                          "subcategory": {
-                            "type": "string",
-                            "example": ""
-                          },
-                          "attribute": {
-                            "type": "array"
-                          },
-                          "itemId": {
-                            "type": "string",
-                            "example": "635b7a5877894f94dc4f7bef"
-                          }
-                        }
-                      }
-                    }
-                  }
-                },
-                "boxId": {
-                  "required": true,
-                  "type": "string",
-                  "example": "635f9d98d117c29742db8833"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Incorrect answer",
-                  "example": "You chose the wrong answer"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/pets/get-profile": {
-      "post": {
-        "summary": "07. Get pet info",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "id": {
-                    "description": "Pet ID",
-                    "required": true,
-                    "type": "string",
-                    "example": ""
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully get pet info",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "petInfo": {
-                  "type": "object",
-                  "description": "Info of pet",
-                  "properties": {
-                    "id": {
-                      "description": "Pet ID",
-                      "required": true,
-                      "type": "string",
-                      "example": ""
-                    },
-                    "playerId": {
-                      "description": "Player ID",
-                      "required": true,
-                      "type": "string",
-                      "example": "uiop7890"
-                    },
-                    "bodyParts": {
-                      "description": "Body parts of pet",
-                      "required": true,
-                      "type": "object",
-                      "properties": {
-                        "key": {
-                          "description": "Name of body part",
-                          "type": "string"
-                        },
-                        "value": {
-                          "type": "string",
-                          "description": "Variant of body part"
-                        }
-                      },
-                      "example": {
-                        "body_shape": "1",
-                        "leg": "2",
-                        "pattern_color": "2",
-                        "ear": "2",
-                        "tail": "2",
-                        "head_mouth": "2",
-                        "nose": "2",
-                        "eyebrow_eye": "2",
-                        "horn": "2",
-                        "wing": "2"
-                      }
-                    },
-                    "name": {
-                      "description": "Name of pet",
-                      "required": true,
-                      "type": "string",
-                      "example": "the-dog"
-                    },
-                    "gender": {
-                      "description": "Gender of pet",
-                      "required": true,
-                      "type": "string",
-                      "example": "female"
-                    },
-                    "description": {
-                      "description": "Description of pet",
-                      "required": true,
-                      "type": "string",
-                      "example": "Not a normal cat"
-                    },
-                    "happiness": {
-                      "description": "Current happiness of pet",
-                      "required": true,
-                      "type": "number",
-                      "example": 97
-                    },
-                    "lastUpdatedHappiness": {
-                      "description": "Last time happiness of pet has been updated",
-                      "required": true,
-                      "type": "string",
-                      "example": "2022-10-10T10:10:10Z"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid access token / Invalid pet ID",
-                      "example": "Incorrect code"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/pets/update-profile": {
-      "post": {
-        "summary": "08. Update pet info",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "description": "New name",
-                    "required": true,
-                    "type": "string",
-                    "example": "the-cat"
-                  },
-                  "gender": {
-                    "description": "Gender of pet",
-                    "required": true,
-                    "type": "string",
-                    "example": "female"
-                  },
-                  "description": {
-                    "description": "Description of pet",
-                    "required": true,
-                    "type": "string",
-                    "example": "Not a normal cat"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully update pet info",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Success message",
-                  "example": "Successfully update pet info"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid gender / Invalid name / Invalid access token",
-                      "example": "Invalid name"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/house/get-house-info": {
-      "post": {
-        "summary": "10. Get house info",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "playerId": {
-                    "description": "Player ID",
-                    "required": true,
-                    "type": "string",
-                    "example": ""
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully get house info",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "houseInfo": {
-                  "type": "object",
-                  "description": "player's house info",
-                  "properties": {
-                    "id": {
-                      "description": "House ID",
-                      "required": true,
-                      "type": "string",
-                      "example": "21"
-                    },
-                    "playerId": {
-                      "description": "Player ID",
-                      "required": true,
-                      "type": "string",
-                      "example": "21"
-                    },
-                    "name": {
-                      "description": "House name",
-                      "required": true,
-                      "type": "string",
-                      "example": "villa"
-                    },
-                    "lock": {
-                      "type": "object",
-                      "required": true,
-                      "description": "Lock info",
-                      "properties": {
-                        "isLocked": {
-                          "type": "boolean",
-                          "required": true,
-                          "example": true
-                        },
-                        "lockId": {
-                          "type": "string",
-                          "example": "lock1"
-                        },
-                        "lockedAt": {
-                          "type": "number",
-                          "description": "timestamp house locked (second)",
-                          "example": 1699568745
-                        },
-                        "unlockedAt": {
-                          "type": "number",
-                          "description": "timestamp house unlocked (second)",
-                          "example": 1699568945
-                        }
-                      }
-                    },
-                    "location": {
-                      "type": "object",
-                      "description": "lat, long of the house",
-                      "required": true,
-                      "properties": {
-                        "lat": {
-                          "type": "number",
-                          "required": true,
-                          "example": 105
-                        },
-                        "long": {
-                          "type": "number",
-                          "required": true,
-                          "example": 20
-                        }
-                      }
-                    },
-                    "rooms": {
-                      "description": "Rooms info",
-                      "required": true,
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "name": {
-                            "description": "name of room",
-                            "type": "string",
-                            "example": "living room"
-                          },
-                          "size": {
-                            "description": "size of room",
-                            "type": "object",
-                            "properties": {
-                              "x": {
-                                "description": "x of room",
-                                "type": "number",
-                                "example": 2
-                              },
-                              "y": {
-                                "description": "y of room",
-                                "type": "number",
-                                "example": 2
-                              },
-                              "z": {
-                                "description": "z of room",
-                                "type": "number",
-                                "example": 2
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "decorItems": {
-                      "type": "array",
-                      "description": "decor items in house",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "itemId": {
-                            "type": "string",
-                            "required": true,
-                            "example": "item1"
-                          },
-                          "location": {
-                            "type": "object",
-                            "required": true,
-                            "description": "location of decor item",
-                            "properties": {
-                              "x": {
-                                "type": "number",
-                                "required": true,
-                                "example": 2
-                              },
-                              "y": {
-                                "type": "number",
-                                "required": true,
-                                "example": 2
-                              },
-                              "z": {
-                                "type": "number",
-                                "required": true,
-                                "example": 2
-                              }
-                            }
-                          }
-                        }
-                      }
-                    },
-                    "poop": {
-                      "type": "object",
-                      "properties": {
-                        "playerId": {
-                          "type": "string",
-                          "description": "ID of player give poop",
-                          "example": "player1"
-                        },
-                        "houseOfVictimId": {
-                          "type": "string",
-                          "description": "Victim ID",
-                          "example": "player2"
-                        },
-                        "status": {
-                          "type": "string",
-                          "example": "not_clean"
-                        },
-                        "createdAt": {
-                          "type": "number",
-                          "example": 169853355
-                        },
-                        "updatedAt": {
-                          "type": "number",
-                          "description": "timestamp clean poop",
-                          "example": 169893355
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid player ID / Invalid access token",
-                      "example": "Invalid player ID"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/house/get-list": {
-      "post": {
-        "summary": "11. Get list house in location",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "lat": {
-                    "description": "lat",
-                    "required": true,
-                    "type": "number",
-                    "example": 105
-                  },
-                  "long": {
-                    "description": "long",
-                    "required": true,
-                    "type": "number",
-                    "example": 20
-                  },
-                  "radius": {
-                    "description": "radius",
-                    "required": "true,",
-                    "type": "number",
-                    "example": 1
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully get list houses in location",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "listHouses": {
-                  "type": "array",
-                  "description": "list houses in location",
-                  "items": {
-                    "type": "object",
-                    "description": "player's house info",
-                    "properties": {
-                      "playerId": {
-                        "description": "Player ID",
-                        "required": true,
-                        "type": "string",
-                        "example": "21"
-                      },
-                      "houseId": {
-                        "description": "House Id",
-                        "required": true,
-                        "type": "string",
-                        "example": "villa"
-                      },
-                      "lat": {
-                        "description": "Latitude",
-                        "type": "number",
-                        "required": true,
-                        "example": 105
-                      },
-                      "long": {
-                        "description": "Longitude",
-                        "type": "number",
-                        "required": true,
-                        "example": 20
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid lat, Invalid long",
-                      "example": "Invalid long"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/house/pin": {
-      "post": {
-        "summary": "12. Pin house",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "lat": {
-                    "description": "lat",
-                    "required": true,
-                    "type": "number",
-                    "example": 105
-                  },
-                  "long": {
-                    "description": "long",
-                    "required": true,
-                    "type": "number",
-                    "example": 20
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully pin house",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Success message",
-                  "example": "Successfully pin house"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid location, Player have already pinned house",
-                      "example": "Invalid location"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/collection/get-item": {
-      "post": {
-        "summary": "13. Get item in collection",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "type": {
-                    "description": "Filter by type",
-                    "type": "string",
-                    "example": "CONSUMABLE"
-                  },
-                  "category": {
-                    "description": "Filter by category",
-                    "type": "string",
-                    "example": "LOCK"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully get items",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "collection": {
-                  "type": "array",
-                  "description": "List item in collection",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "itemId": {
-                        "type": "string"
-                      },
-                      "quantity": {
-                        "type": "number"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "category": {
-                        "type": "string"
-                      },
-                      "subcategory": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": [
-                    {
-                      "playerId": "player1",
-                      "itemId": "635b7a5877894f94dc4f7bef",
-                      "quantity": 1,
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subcategory": ""
-                    },
-                    {
-                      "playerId": "player1",
-                      "itemId": "635b7a5877894f94dc4f7b75",
-                      "quantity": 2,
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subcategory": ""
-                    }
                   ]
                 }
               }
@@ -1669,13 +468,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid teacher ID",
+                      "example": "Invalid teacher ID"
                     }
                   }
                 }
@@ -1691,9 +485,9 @@
         }
       }
     },
-    "/api/v1/players/balance": {
-      "get": {
-        "summary": "14. Get balance of player",
+    "/teacher/update": {
+      "post": {
+        "summary": "6. Update teacher info",
         "tags": [
           "Version 0.5"
         ],
@@ -1706,17 +500,286 @@
             "description": "Access token"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "teacherId": {
+                    "description": "teacher ID",
+                    "type": "string",
+                    "example": "0001"
+                  },
+                  "updateInfo": {
+                    "description": "data update",
+                    "type": "object",
+                    "properties": {
+                      "teacherName": {
+                        "type": "string",
+                        "example": "Nguyen Van A"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "Successfully get balance of player",
+            "description": "Successfully update info",
             "schema": {
               "type": "object",
               "properties": {
-                "balance": {
+                "message": {
+                  "type": "string",
+                  "example": "Successful"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid teacher ID",
+                      "example": "Invalid teacher ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/teacher/create": {
+      "post": {
+        "summary": "7. Create teacher",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "teacherId": {
+                    "description": "teacher ID",
+                    "type": "string",
+                    "example": "0001"
+                  },
+                  "teacherName": {
+                    "description": "teacherName",
+                    "type": "string",
+                    "example": "Nguyen Van A"
+                  },
+                  "accountId": {
+                    "type": "string",
+                    "example": "6a5dfwegfdfgstheyqf"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully create teacher",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teacherId": {
+                  "description": "teacher ID",
+                  "type": "string",
+                  "example": "0001"
+                },
+                "teacherName": {
+                  "description": "teacherName",
+                  "type": "string",
+                  "example": "Nguyen Van A"
+                },
+                "accountId": {
+                  "type": "string",
+                  "example": "6a5dfwegfdfgstheyqf"
+                },
+                "teacherBusyTime": {
+                  "type": "array",
+                  "example": []
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid teacher ID",
+                      "example": "Invalid teacher ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/teacher/delete": {
+      "post": {
+        "summary": "8. Delete teacher",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "teacherId": {
+                    "type": "string",
+                    "example": "0001"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully delete teacher",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successful"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid teacher ID",
+                      "example": "Invalid teacher ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/subject/get": {
+      "get": {
+        "summary": "9. Get subject info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subjectId": {
+                    "type": "string",
+                    "example": "IT4000"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get subject info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "subjectId": {
+                  "required": true,
+                  "type": "string",
+                  "example": "IT4000"
+                },
+                "subjectName": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Database"
+                },
+                "credit": {
+                  "required": true,
                   "type": "number",
-                  "description": "Balance of player",
-                  "required": true,
-                  "example": 700
+                  "example": 3
                 }
               }
             }
@@ -1731,13 +794,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid teacher ID",
+                      "example": "Invalid teacher ID"
                     }
                   }
                 }
@@ -1753,9 +811,9 @@
         }
       }
     },
-    "/api/v1/mystery-boxes/claim": {
+    "/subject/update": {
       "post": {
-        "summary": "15. Claim reward",
+        "summary": "10. Update subject info",
         "tags": [
           "Version 0.5"
         ],
@@ -1774,10 +832,19 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "boxId": {
+                  "subjectId": {
                     "type": "string",
-                    "required": true,
-                    "example": "635f9d98d117c29742db8833"
+                    "example": "IT4000"
+                  },
+                  "updateInfo": {
+                    "description": "data update",
+                    "type": "object",
+                    "properties": {
+                      "subjectName": {
+                        "type": "string",
+                        "example": "Database"
+                      }
+                    }
                   }
                 }
               }
@@ -1786,99 +853,13 @@
         },
         "responses": {
           "200": {
-            "description": "Successfully claim reward",
+            "description": "Successfully update info",
             "schema": {
               "type": "object",
               "properties": {
                 "message": {
                   "type": "string",
-                  "required": true,
-                  "example": "You've just received 16 coins"
-                },
-                "isCollectionFull": {
-                  "type": "boolean",
-                  "required": true,
-                  "example": false
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Claim reward failed",
-                  "example": "Claim reward failed"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/pet-care/feeding/get-foods": {
-      "get": {
-        "summary": "16. Get list foods",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List foods",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "foods": {
-                  "type": "array",
-                  "description": "List foods",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string",
-                        "description": "Id of item",
-                        "example": "636097fb87803e89283873ee"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Name of item",
-                        "example": "Beef"
-                      },
-                      "category": {
-                        "type": "string",
-                        "description": "Category of item",
-                        "example": "Food"
-                      },
-                      "subcategory": {
-                        "type": "string",
-                        "description": "Subcategory",
-                        "example": "meat"
-                      },
-                      "price": {
-                        "type": "string",
-                        "description": "Price of item",
-                        "example": 10
-                      }
-                    }
-                  }
+                  "example": "Successful"
                 }
               }
             }
@@ -1893,13 +874,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token / Invalid pet",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid subject ID",
+                      "example": "Invalid subject ID"
                     }
                   }
                 }
@@ -1915,9 +891,9 @@
         }
       }
     },
-    "/api/v1/shop": {
+    "/subject/create": {
       "post": {
-        "summary": "17. Get list items in shop",
+        "summary": "11. Create subject",
         "tags": [
           "Version 0.5"
         ],
@@ -1936,25 +912,17 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "sortKey": {
-                    "description": "Key sort createdAt , price",
+                  "subjectId": {
                     "type": "string",
-                    "example": "createdAt"
+                    "example": "IT3000"
                   },
-                  "sortValue": {
-                    "description": "Value sort 1 or -1",
+                  "subjectName": {
+                    "type": "string",
+                    "example": "Thuat toan ung dung"
+                  },
+                  "credit": {
                     "type": "number",
-                    "example": 1
-                  },
-                  "category": {
-                    "description": "Category item",
-                    "type": "string",
-                    "example": "comsumable"
-                  },
-                  "subcategory": {
-                    "description": "Subcategory item",
-                    "type": "string",
-                    "example": "lock"
+                    "example": "3"
                   }
                 }
               }
@@ -1963,49 +931,21 @@
         },
         "responses": {
           "200": {
-            "description": "List items in shop",
+            "description": "Successfully create subject",
             "schema": {
               "type": "object",
-              "properties": {
-                "itemsOnSale": {
-                  "type": "array",
-                  "description": "List items",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "_id": {
-                        "type": "string",
-                        "description": "Id of item",
-                        "example": "636097fb87803e89283873ee"
-                      },
-                      "name": {
-                        "type": "string",
-                        "description": "Name of item",
-                        "example": "Beef"
-                      },
-                      "category": {
-                        "type": "string",
-                        "description": "Category of item",
-                        "example": "Food"
-                      },
-                      "subcategory": {
-                        "type": "string",
-                        "description": "Subcategory",
-                        "example": "meat"
-                      },
-                      "price": {
-                        "type": "string",
-                        "description": "Price of item",
-                        "example": 10
-                      },
-                      "quantity": {
-                        "type": "number",
-                        "description": "Total",
-                        "example": 1
-                      }
-                    }
-                  }
-                }
+              "properties": null,
+              "subjectId": {
+                "type": "string",
+                "example": "IT3000"
+              },
+              "subjectName": {
+                "type": "string",
+                "example": "Thuat toan ung dung"
+              },
+              "credit": {
+                "type": "number",
+                "example": "3"
               }
             }
           },
@@ -2019,13 +959,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token / Invalid pet",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid subject ID",
+                      "example": "Invalid subject ID"
                     }
                   }
                 }
@@ -2041,9 +976,9 @@
         }
       }
     },
-    "/api/v1/house/unpublish": {
+    "/subject/delete": {
       "post": {
-        "summary": "18. Get list house unpublished",
+        "summary": "12. Delete subject",
         "tags": [
           "Version 0.5"
         ],
@@ -2056,51 +991,30 @@
             "description": "Access token"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "subjectId": {
+                    "type": "string",
+                    "example": "IT3000"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "list house unpublished",
+            "description": "Successfully delete subject",
             "schema": {
               "type": "object",
               "properties": {
-                "listHouses": {
-                  "type": "array",
-                  "description": "list house unpublished",
-                  "items": {
-                    "type": "object",
-                    "description": "player's house info",
-                    "properties": {
-                      "type": {
-                        "description": "Type's feature",
-                        "required": true,
-                        "type": "string",
-                        "example": "house"
-                      },
-                      "player_id": {
-                        "description": "Player ID",
-                        "required": true,
-                        "type": "string",
-                        "example": "21"
-                      },
-                      "pet_name": {
-                        "description": "Pet's name player",
-                        "required": "true,",
-                        "type": "string,",
-                        "example": "pet"
-                      },
-                      "lat": {
-                        "description": "Latitude",
-                        "type": "number",
-                        "required": true,
-                        "example": 20
-                      },
-                      "lon": {
-                        "description": "Longitude",
-                        "type": "number",
-                        "required": true,
-                        "example": 105
-                      }
-                    }
-                  }
+                "message": {
+                  "type": "string",
+                  "example": "Successful"
                 }
               }
             }
@@ -2115,13 +1029,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid location, Player have already pinned house",
-                      "example": "Invalid location"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid subject ID",
+                      "example": "Invalid subject ID"
                     }
                   }
                 }
@@ -2137,9 +1046,9 @@
         }
       }
     },
-    "/api/v1/mail-box/get-messages-list": {
+    "/class/get": {
       "get": {
-        "summary": "19. Get messages list",
+        "summary": "13. Get class info",
         "tags": [
           "Version 0.5"
         ],
@@ -2152,137 +1061,157 @@
             "description": "Access token"
           }
         ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "classId": {
+                    "description": "class ID",
+                    "type": "string",
+                    "example": "789248"
+                  }
+                }
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
-            "description": "List messages",
+            "description": "Successfully get class info",
             "schema": {
               "type": "object",
               "properties": {
-                "mails": {
-                  "description": "mail sent and received",
-                  "type": "Array",
-                  "items": {
+                "classId": {
+                  "required": true,
+                  "type": "string",
+                  "example": "789248"
+                },
+                "subjectId": {
+                  "required": true,
+                  "type": "string",
+                  "example": "IT3505"
+                },
+                "subjectName": {
+                  "required": true,
+                  "type": "string",
+                  "example": "Database"
+                },
+                "teacherName": {
+                  "type": "string",
+                  "example": "Nguyen Van A"
+                },
+                "locationName": {
+                  "type": "string",
+                  "example": "TC-209"
+                },
+                "classBusyTime": {
+                  "type": "array",
+                  "example": [
+                    1,
+                    2,
+                    3,
+                    10,
+                    11,
+                    12
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/class/update": {
+      "post": {
+        "summary": "14. Update class info",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "classId": {
+                    "type": "string",
+                    "example": "789254"
+                  },
+                  "updateInfo": {
+                    "description": "data update",
                     "type": "object",
                     "properties": {
-                      "id": {
-                        "type": "string"
+                      "subjectId": {
+                        "type": "string",
+                        "example": "IT-3000"
                       },
-                      "from": {
-                        "type": "string"
+                      "teacherId": {
+                        "type": "string",
+                        "example": "Nguyen Van B"
                       },
-                      "to": {
-                        "type": "string"
+                      "locationName": {
+                        "type": "string",
+                        "example": "TC-401"
                       },
-                      "message": {
-                        "type": "string"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "items": {
+                      "classBusyTime": {
                         "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "id": {
-                              "description": "item ID",
-                              "type": "string"
-                            },
-                            "name": {
-                              "description": "item name",
-                              "required": true,
-                              "type": "string"
-                            },
-                            "rarity": {
-                              "description": "item rarity",
-                              "required": true,
-                              "type": "string"
-                            },
-                            "category": {
-                              "description": "item category",
-                              "required": true,
-                              "type": "string"
-                            },
-                            "subCategory": {
-                              "description": "item subcategory",
-                              "required": true,
-                              "type": "string"
-                            }
-                          }
-                        }
-                      },
-                      "status": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
+                        "example": [
+                          4,
+                          5,
+                          6
+                        ]
                       }
                     }
-                  },
-                  "example": [
-                    {
-                      "id": "635f820e9f7acba18b3242d4",
-                      "from": "player1",
-                      "to": "player2",
-                      "message": "A gift from player1",
-                      "title": "gift",
-                      "status": "sent",
-                      "items": [
-                        {
-                          "id": "635f820e9f7acba18b3242d4",
-                          "name": "lockCommon",
-                          "rarity": "common",
-                          "category": "tools",
-                          "subCategory": "lock"
-                        },
-                        {
-                          "id": "635f820e9f7acbsdfaer23323",
-                          "name": "lockEpic",
-                          "rarity": "epic",
-                          "category": "tools",
-                          "subCategory": "lock"
-                        }
-                      ],
-                      "createdAt": "2022-10-31T08:06:38.058+00:00"
-                    }
-                  ]
-                },
-                "notifications": {
-                  "description": "Notifications",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "type": "string"
-                      },
-                      "title": {
-                        "type": "string"
-                      },
-                      "body": {
-                        "type": "string"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "link": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": [
-                    {
-                      "id": "635f820e9f7acba18b3242d4",
-                      "title": "Update",
-                      "body": "Update infomation",
-                      "type": "",
-                      "link": "",
-                      "createdAt": "2022-10-31T08:06:38.058+00:00"
-                    }
-                  ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully update info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successful"
                 }
               }
             }
@@ -2297,13 +1226,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
                     }
                   }
                 }
@@ -2319,9 +1243,9 @@
         }
       }
     },
-    "/api/v1/mail-box/read-message": {
+    "/class/create": {
       "post": {
-        "summary": "20. Read a message",
+        "summary": "15. Create class",
         "tags": [
           "Version 0.5"
         ],
@@ -2340,958 +1264,28 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "messageId": {
-                    "description": "message ID",
+                  "classId": {
                     "type": "string",
-                    "example": "635f820e9f7acba18b3242d4"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Read message successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "id": {
-                  "required": true,
-                  "type": "string",
-                  "example": "635f820e9f7acba18b3242d4"
-                },
-                "from": {
-                  "type": "string",
-                  "required": true,
-                  "example": "player1"
-                },
-                "to": {
-                  "type": "string",
-                  "required": true,
-                  "example": "player2"
-                },
-                "title": {
-                  "type": "string",
-                  "example": "hi"
-                },
-                "message": {
-                  "type": "string",
-                  "example": "hello world"
-                },
-                "items": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "description": "item ID",
-                        "type": "string"
-                      },
-                      "name": {
-                        "description": "item name",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "rarity": {
-                        "description": "item rarity",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "category": {
-                        "description": "item category",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "subCategory": {
-                        "description": "item subcategory",
-                        "required": true,
-                        "type": "string"
-                      }
-                    }
+                    "example": "975985"
                   },
-                  "example": [
-                    {
-                      "id": "635f820e9f7acba18b3242d4",
-                      "name": "lockCommon",
-                      "rarity": "common",
-                      "category": "tools",
-                      "subCategory": "lock"
-                    }
-                  ]
-                },
-                "status": {
-                  "type": "string",
-                  "required": true,
-                  "example": "sent"
-                },
-                "createdAt": {
-                  "type": "string",
-                  "required": true,
-                  "example": "2022-10-31T08:06:38.058+00:00"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Invalid message ID",
-                  "example": "Invalid message ID"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/mail-box/delete": {
-      "post": {
-        "summary": "21. Delete all messages",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Delete messages successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "required": true,
-                  "type": "string",
-                  "example": "Delete messages successfully"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Invalid access token",
-                  "example": "Invalid access token"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/mail-box/get-item-in-message": {
-      "post": {
-        "summary": "22. Get item in message",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "messageId": {
-                    "description": "message ID",
+                  "subjectId": {
                     "type": "string",
-                    "example": "635f820e9f7acba18b3242d4"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Get item successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "required": true,
-                  "type": "string",
-                  "example": "Get items successfully"
-                },
-                "items": {
-                  "description": "List items",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "description": "item ID",
-                        "required": true,
-                        "type": "string",
-                        "example": "635f820e9f7acba18b3242d4"
-                      },
-                      "name": {
-                        "description": "item name",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "rarity": {
-                        "description": "item rarity",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "type": {
-                        "description": "item type",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "category": {
-                        "description": "item category",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "subcategory": {
-                        "description": "item subcategory",
-                        "type": "string"
-                      }
-                    }
+                    "example": "IT-3000"
                   },
-                  "example": [
-                    {
-                      "id": "635f820e9f7acba18b3242d4",
-                      "name": "lockCommon",
-                      "rarity": "COMMON",
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subcategory": ""
-                    },
-                    {
-                      "id": "635f820e9f7a23rdffsd42d4",
-                      "name": "lockLegendary",
-                      "rarity": "LEGENDARY",
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subcategory": ""
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Invalid message ID",
-                  "example": "Invalid message ID"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/mail-box/get-all-items": {
-      "get": {
-        "summary": "23. Get all items in messages",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List items",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "required": true,
-                  "type": "string",
-                  "example": "Get all items successfully"
-                },
-                "items": {
-                  "description": "List items",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "id": {
-                        "description": "item ID",
-                        "required": true,
-                        "type": "string",
-                        "example": "635f820e9f7acba18b3242d4"
-                      },
-                      "name": {
-                        "description": "item name",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "rarity": {
-                        "description": "item rarity",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "type": {
-                        "description": "item type",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "category": {
-                        "description": "item category",
-                        "required": true,
-                        "type": "string"
-                      },
-                      "subCategory": {
-                        "description": "item subcategory",
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": [
-                    {
-                      "id": "635f820e9f7acba18b3242d4",
-                      "name": "lockCommon",
-                      "rarity": "COMMON",
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subCategory": ""
-                    },
-                    {
-                      "id": "635f820e9f7a23rdffsd42d4",
-                      "name": "lockLegendary",
-                      "rarity": "LEGENDARY",
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subCategory": ""
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid access token",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/friend/get-list": {
-      "get": {
-        "summary": "24. Get list friend",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List messages",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "friends": {
-                  "description": "List friend of player",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "avatar": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "playerId": {
-                        "type": "string"
-                      },
-                      "lastLogin": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": [
-                    {
-                      "avatar": "",
-                      "name": "playerName1",
-                      "playerId": "testplayer1",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    },
-                    {
-                      "avatar": "",
-                      "name": "playerName2",
-                      "playerId": "testplayer2",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid access token",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/friend/send-request": {
-      "post": {
-        "summary": "25. Send friend request",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "playerId": {
-                    "description": "ID of player received request",
-                    "required": true,
+                  "teacherId": {
                     "type": "string",
-                    "example": "player1"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Send friend request successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "required": true,
-                  "type": "string",
-                  "example": "Sent friend request successfully"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Invalid player ID",
-                  "example": "Invalid player ID"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/friend/get-request-list": {
-      "get": {
-        "summary": "26. Get friend requests list",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "List requests",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "receivedRequest": {
-                  "description": "List received requests of player",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "avatar": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "playerId": {
-                        "type": "string"
-                      },
-                      "lastLogin": {
-                        "type": "string"
-                      }
-                    }
+                    "example": "0001"
                   },
-                  "example": [
-                    {
-                      "avatar": "",
-                      "name": "playerName1",
-                      "playerId": "testplayer1",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    },
-                    {
-                      "avatar": "",
-                      "name": "playerName2",
-                      "playerId": "testplayer2",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    }
-                  ]
-                },
-                "sentRequest": {
-                  "description": "List sent requests of player",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "avatar": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "playerId": {
-                        "type": "string"
-                      },
-                      "lastLogin": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": [
-                    {
-                      "avatar": "",
-                      "name": "playerName3",
-                      "playerId": "testplayer3",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    },
-                    {
-                      "avatar": "",
-                      "name": "playerName4",
-                      "playerId": "testplayer4",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "error": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "description": "Invalid access token",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/friend/accept-request": {
-      "post": {
-        "summary": "27. Accept friend request",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "playerId": {
-                    "description": "ID of player sent request",
-                    "required": true,
+                  "locationName": {
                     "type": "string",
-                    "example": "player1"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Accepted friend request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "required": true,
-                  "type": "string",
-                  "example": "Accepted friend request"
-                },
-                "friends": {
-                  "description": "List friend of player",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "avatar": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "playerId": {
-                        "type": "string"
-                      },
-                      "lastLogin": {
-                        "type": "string"
-                      }
-                    }
+                    "example": "TC-101"
                   },
-                  "example": [
-                    {
-                      "avatar": "",
-                      "name": "playerName1",
-                      "playerId": "testplayer1",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    },
-                    {
-                      "avatar": "",
-                      "name": "playerName2",
-                      "playerId": "testplayer2",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Invalid player ID",
-                  "example": "Invalid player ID"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/friend/unfriend": {
-      "post": {
-        "summary": "28. Unfriend",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "playerId": {
-                    "description": "ID of player",
-                    "required": true,
-                    "type": "string",
-                    "example": "player1"
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Unfriend successfully",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "required": true,
-                  "type": "string",
-                  "example": "Unfriend successfully"
-                },
-                "friends": {
-                  "description": "List friend of player",
-                  "type": "Array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "avatar": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "playerId": {
-                        "type": "string"
-                      },
-                      "lastLogin": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "example": [
-                    {
-                      "avatar": "",
-                      "name": "playerName1",
-                      "playerId": "testplayer1",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    },
-                    {
-                      "avatar": "",
-                      "name": "playerName2",
-                      "playerId": "testplayer2",
-                      "lastLogin": "2022-10-31T08:06:38.058+00:00"
-                    }
-                  ]
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Invalid player ID",
-                  "example": "Invalid player ID"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/friend/send-message": {
-      "post": {
-        "summary": "29. Send message",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "playerId": {
-                    "description": "ID of player receive message",
-                    "required": true,
-                    "type": "string",
-                    "example": "player2"
-                  },
-                  "message": {
-                    "type": "string",
-                    "example": "A gift from player1"
-                  },
-                  "title": {
-                    "type": "string",
-                    "example": "Gift"
-                  },
-                  "items": {
+                  "classBusyTime": {
                     "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "itemId": {
-                          "required": true,
-                          "type": "string"
-                        }
-                      }
-                    },
                     "example": [
-                      {
-                        "itemId": "635f820e9f7acba18b3242d4"
-                      },
-                      {
-                        "itemId": "635f820e9f7acba18b3adsfe"
-                      }
+                      1,
+                      2,
+                      3
                     ]
                   }
                 }
@@ -3301,131 +1295,32 @@
         },
         "responses": {
           "200": {
-            "description": "Sent message successfully",
+            "description": "Successfully create class",
             "schema": {
               "type": "object",
               "properties": {
-                "message": {
-                  "required": true,
+                "classId": {
                   "type": "string",
-                  "example": "Sent message successfully"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad request",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "type": "string",
-                  "description": "Invalid player ID",
-                  "example": "Invalid player ID"
-                }
-              }
-            }
-          },
-          "404": {
-            "$ref": "#/responses/404"
-          },
-          "500": {
-            "$ref": "#/responses/500"
-          }
-        }
-      }
-    },
-    "/api/v1/collection/delete-item": {
-      "$ref": "paths/v1/collection/delete-item/post.yaml"
-    },
-    "/api/v1/collection/add-item": {
-      "post": {
-        "summary": "31. Add items to collection",
-        "tags": [
-          "Version 0.5"
-        ],
-        "parameters": [
-          {
-            "in": "header",
-            "name": "Authorization",
-            "type": "string",
-            "required": true,
-            "description": "Access token"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "itemId": {
-                    "description": "itemId",
-                    "type": "string",
-                    "example": "635b7a5877894f94dc4f7b75"
-                  },
-                  "quantity": {
-                    "description": "Quantity of item",
-                    "type": "number",
-                    "example": 3
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Successfully add items",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "message": {
-                  "description": "Add items successfully",
-                  "required": true,
-                  "type": "string",
-                  "example": "Add items successfully"
+                  "example": "975985"
                 },
-                "collection": {
+                "subjectId": {
+                  "type": "string",
+                  "example": "IT-3000"
+                },
+                "teacherId": {
+                  "type": "string",
+                  "example": "0001"
+                },
+                "locationName": {
+                  "type": "string",
+                  "example": "TC-101"
+                },
+                "classBusyTime": {
                   "type": "array",
-                  "description": "List item in collection",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "itemId": {
-                        "type": "string"
-                      },
-                      "quantity": {
-                        "type": "number"
-                      },
-                      "type": {
-                        "type": "string"
-                      },
-                      "category": {
-                        "type": "string"
-                      },
-                      "subcategory": {
-                        "type": "string"
-                      }
-                    }
-                  },
                   "example": [
-                    {
-                      "playerId": "player1",
-                      "itemId": "635b7a5877894f94dc4f7b75",
-                      "quantity": 1,
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subcategory": ""
-                    },
-                    {
-                      "playerId": "player1",
-                      "itemId": "635b7a5877894f94dc4f7bef",
-                      "quantity": 2,
-                      "type": "CONSUMABLE",
-                      "category": "LOCK",
-                      "subcategory": ""
-                    }
+                    1,
+                    2,
+                    3
                   ]
                 }
               }
@@ -3441,8 +1336,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid itemID",
-                      "example": "Invalid itemID"
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
                     }
                   }
                 }
@@ -3458,9 +1353,9 @@
         }
       }
     },
-    "/api/v1/pet-care/feeding": {
+    "/class/delete": {
       "post": {
-        "summary": "32. Feeding pet",
+        "summary": "16. Delete class",
         "tags": [
           "Version 0.5"
         ],
@@ -3479,10 +1374,9 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "storeId": {
-                    "description": "Store ID when get list item in store with filter category = FOOD",
+                  "classId": {
                     "type": "string",
-                    "example": "AFSQ1A4FA124"
+                    "example": "789684"
                   }
                 }
               }
@@ -3491,97 +1385,13 @@
         },
         "responses": {
           "200": {
-            "description": "Success feeding",
+            "description": "Successfully delete class",
             "schema": {
               "type": "object",
               "properties": {
-                "playerInfo": {
-                  "type": "object",
-                  "description": "Player info",
-                  "properties": {
-                    "playerId": {
-                      "type": "string",
-                      "required": true,
-                      "example": ""
-                    },
-                    "name": {
-                      "type": "string",
-                      "required": true,
-                      "example": "player1"
-                    },
-                    "authProvided": {
-                      "type": "string",
-                      "required": true,
-                      "example": "google"
-                    },
-                    "createdAt": {
-                      "type": "number",
-                      "description": "timestamp account created (second)",
-                      "example": 1666341899
-                    },
-                    "balance": {
-                      "type": "number",
-                      "required": true,
-                      "example": 777
-                    },
-                    "inventoryCapacity": {
-                      "type": "object",
-                      "required": true,
-                      "properties": {
-                        "consumable": {
-                          "type": "number",
-                          "example": 20
-                        },
-                        "permanent": {
-                          "type": "number",
-                          "example": 10
-                        }
-                      }
-                    }
-                  }
-                },
-                "petInfo": {
-                  "type": "object",
-                  "description": "Pet info",
-                  "properties": {
-                    "id": {
-                      "description": "Pet id",
-                      "example": "34234823djfsjfsf"
-                    },
-                    "bodyParts": {
-                      "description": "Body parts of pet",
-                      "example": {
-                        "body_shape": "1",
-                        "leg": "2",
-                        "pattern_color": "2",
-                        "ear": "2",
-                        "tail": "2",
-                        "head_mouth": "2",
-                        "nose": "2",
-                        "eyebrow_eye": "2",
-                        "horn": "2",
-                        "wing": "2"
-                      }
-                    },
-                    "name": {
-                      "description": "Pet name",
-                      "required": true,
-                      "type": "string",
-                      "example": "the-dog"
-                    },
-                    "gender": {
-                      "description": "Pet gender",
-                      "required": true,
-                      "type": "string",
-                      "example": "female"
-                    },
-                    "happiness": {
-                      "description": "Current happiness of pet",
-                      "required": true,
-                      "type": "number",
-                      "example": 97
-                    }
-                  }
+                "message": {
+                  "type": "string",
+                  "example": "Successful"
                 }
               }
             }
@@ -3596,13 +1406,8 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "description": "Invalid access token / Invalid pet",
-                      "example": "Invalid access token"
-                    },
-                    "code": {
-                      "type": "integer",
-                      "description": "ERROR_CODE",
-                      "example": 10003
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
                     }
                   }
                 }

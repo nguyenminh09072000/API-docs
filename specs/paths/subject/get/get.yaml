@@ -1,5 +1,5 @@
 get:
-  summary: 1. Get student info
+  summary: 9. Get subject info
   tags:
     - Version 0.5
   parameters:
@@ -15,36 +15,28 @@ get:
         schema:
           type: object
           properties:
-            studentId:
-              description: student ID
+            subjectId:
               type: string
-              example: '20183592'
+              example: 'IT4000'
 
   responses:
     200:
-      description: Successfully get student info
+      description: Successfully get subject info
       schema:
         type: object
         properties:
-          studentId:
-            description: Student ID
+          subjectId:
             required: true
             type: string
-            example: '20183592'
-          studentName:
-            description: Student Name
+            example: 'IT4000'
+          subjectName:
             required: true
             type: string
-            example: 'Nguyen Nhat Minh'
-          accountId:
-            description: account Id
+            example: 'Database'
+          credit:
             required: true
-            type: string
-            example: 'asdf34t245yhtyene'
-          studentBusyTime:
-            type: array
-            example: [1,2,3,10,11,12]
-
+            type: number
+            example: 3
     400:
       description: Bad request
       schema:
@@ -55,8 +47,8 @@ get:
             properties:
               message:
                 type: string
-                description: Invalid student ID
-                example: Invalid student ID
+                description: Invalid teacher ID
+                example: Invalid teacher ID
     404:
       $ref: '#/responses/404'
     500:

@@ -1,123 +1,67 @@
-#1
-/api/v1/game-account/login:
-  $ref: paths/v1/game-account/login/post.yaml
+# STUDENT
+  #1
+  /student/get:
+    $ref: paths/student/get/get.yaml
 
-#2
-/api/v1/game-account/player-info:
-  $ref: paths/v1/game-account/player-info/post.yaml
+  #2
+  /student/update:
+    $ref: paths/student/update/post.yaml
 
-#3
-/api/v1/pets/get-random-pet:
-  $ref: paths/v1/pet-create/random/post.yaml
+  #3
+  /student/create:
+    $ref: paths/student/create/post.yaml
 
-#4
-/api/v1/pets/pick:
-  $ref: paths/v1/pet-create/pick/post.yaml
+  #4
+  /student/delete:
+    $ref: paths/student/delete/post.yaml
 
-#5
-/api/v1/mystery-boxes/open:
-  $ref: paths/v1/mystery-boxes/open/post.yaml
+# Teacher
+  #5
+  /teacher/get:
+    $ref: paths/teacher/get/get.yaml
 
-#6
-/api/v1/mystery-boxes/answer:
-  $ref: paths/v1/mystery-boxes/answer/post.yaml
+  #6
+  /teacher/update:
+    $ref: paths/teacher/update/post.yaml
 
-#7
-/api/v1/pets/get-profile:
-  $ref: paths/v1/pet-profile/get/post.yaml
+  #7
+  /teacher/create:
+    $ref: paths/teacher/create/post.yaml
 
-#8
-/api/v1/pets/update-profile:
-  $ref: paths/v1/pet-profile/update/post.yaml
+  #8
+  /teacher/delete:
+    $ref: paths/teacher/delete/post.yaml
 
-#9
-/api/v1/house/get-house-info:
-  $ref: paths/v1/house/get-house-info/post.yaml
+# SUBJECT:
+    #9
+  /subject/get:
+    $ref: paths/subject/get/get.yaml
 
-#10
-/api/v1/house/get-list:
-  $ref: paths/v1/house/get-list/post.yaml
+    #10
+  /subject/update:
+    $ref: paths/subject/update/post.yaml
 
-#11
-/api/v1/house/pin:
-  $ref: paths/v1/house/pin/post.yaml
+    #11
+  /subject/create:
+    $ref: paths/subject/create/post.yaml
 
-#12
-/api/v1/collection/get-item:
-  $ref: paths/v1/collection/get-item/post.yaml
+    #12
+  /subject/delete:
+    $ref: paths/subject/delete/post.yaml
 
-#13
-/api/v1/players/balance:
-  $ref: paths/v1/player/balance/get.yaml
+# CLASS
+    #13
+  /class/get:
+    $ref: paths/class/get/get.yaml
 
-#14
-/api/v1/mystery-boxes/claim:
-  $ref: paths/v1/mystery-boxes/claim/post.yaml
+    #14
+  /class/update:
+    $ref: paths/class/update/post.yaml
 
-#15
-/api/v1/pet-care/feeding/get-foods:
-  $ref: paths/v1/pet-care/feeding/get-foods/get.yaml
+    #15
+  /class/create:
+    $ref: paths/class/create/post.yaml
 
-#16
-/api/v1/shop:
-  $ref: paths/v1/shop/post.yaml
-
-#17
-/api/v1/house/unpublish:
-  $ref: paths/v1/house/unpublish/get.yaml
-
-#18
-/api/v1/mail-box/get-messages-list:
-  $ref: paths/v1/mail-box/get-messages-list/get.yaml
-
-#19
-/api/v1/mail-box/read-message:
-  $ref: paths/v1/mail-box/read-message/post.yaml
-
-#20
-/api/v1/mail-box/delete:
-  $ref: paths/v1/mail-box/delete/post.yaml
-
-#21
-/api/v1/mail-box/get-item-in-message:
-  $ref: paths/v1/mail-box/get-item-in-message/post.yaml
-
-#22
-/api/v1/mail-box/get-all-items:
-  $ref: paths/v1/mail-box/get-all-items/get.yaml
-
-#24
-/api/v1/friend/get-list:
-  $ref: paths/v1/friend/get-list/get.yaml
-
-#25
-/api/v1/friend/send-request:
-  $ref: paths/v1/friend/send-request/post.yaml
-
-#26
-/api/v1/friend/get-request-list:
-  $ref: paths/v1/friend/get-request-list/get.yaml
-
-#27
-/api/v1/friend/accept-request:
-  $ref: paths/v1/friend/accept-request/post.yaml
-
-#28
-/api/v1/friend/unfriend:
-  $ref: paths/v1/friend/unfriend/post.yaml
-
-#29
-/api/v1/friend/send-message:
-  $ref: paths/v1/friend/send-message/post.yaml
-
-#30
-/api/v1/collection/delete-item:
-  $ref: paths/v1/collection/delete-item/post.yaml
-
-#31
-/api/v1/collection/add-item:
-  $ref: paths/v1/collection/add-item/post.yaml
-
-#32
-/api/v1/pet-care/feeding:
-  $ref: paths/v1/pet-care/feeding/post.yaml
+    #16
+  /class/delete:
+    $ref: paths/class/delete/post.yaml

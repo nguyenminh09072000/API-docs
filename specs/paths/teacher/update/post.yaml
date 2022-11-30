@@ -1,0 +1,55 @@
+post:
+  summary: 6. Update teacher info
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            teacherId:
+              description: teacher ID
+              type: string
+              example: '0001'
+            updateInfo:
+              description: data update
+              type: object
+              properties:
+                teacherName:
+                  type: string
+                  example: 'Nguyen Van A'
+
+  responses:
+    200:
+      description: Successfully update info
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            example: 'Successful'
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid teacher ID
+                example: Invalid teacher ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'

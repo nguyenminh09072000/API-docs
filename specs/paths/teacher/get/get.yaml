@@ -1,5 +1,5 @@
 get:
-  summary: 1. Get student info
+  summary: 5. Get teacher info
   tags:
     - Version 0.5
   parameters:
@@ -15,36 +15,51 @@ get:
         schema:
           type: object
           properties:
-            studentId:
-              description: student ID
+            teacherId:
+              description: teacher ID
               type: string
-              example: '20183592'
+              example: '0001'
 
   responses:
     200:
-      description: Successfully get student info
+      description: Successfully get teacher info
       schema:
         type: object
         properties:
-          studentId:
-            description: Student ID
+          teacherId:
+            description: teacher ID
             required: true
             type: string
-            example: '20183592'
-          studentName:
-            description: Student Name
+            example: '0001'
+          teacherName:
+            description: Teacher Name
             required: true
             type: string
-            example: 'Nguyen Nhat Minh'
+            example: 'Pham Van Hai'
           accountId:
             description: account Id
             required: true
             type: string
             example: 'asdf34t245yhtyene'
-          studentBusyTime:
+          teacherBusyTime:
             type: array
             example: [1,2,3,10,11,12]
-
+          teacherClasses:
+            type: array
+            items:
+              classId:
+                type: string
+              subjectId:
+                type: string
+              locationName:
+                type: string
+              classBusyTime:
+                type: array
+            example:
+              - classId: '589584'
+                subjectId: 'IT3150'
+                locationName: 'TC-101'
+                classBusyTime: [1,2,3]
     400:
       description: Bad request
       schema:
@@ -55,8 +70,8 @@ get:
             properties:
               message:
                 type: string
-                description: Invalid student ID
-                example: Invalid student ID
+                description: Invalid teacher ID
+                example: Invalid teacher ID
     404:
       $ref: '#/responses/404'
     500:

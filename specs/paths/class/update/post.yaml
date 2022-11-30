@@ -1,0 +1,63 @@
+post:
+  summary: 14. Update class info
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            classId:
+              type: string
+              example: '789254'
+            updateInfo:
+              description: data update
+              type: object
+              properties:
+                subjectId:
+                  type: string
+                  example: 'IT-3000'
+                teacherId:
+                  type: string
+                  example: 'Nguyen Van B'
+                locationName:
+                  type: string
+                  example: 'TC-401'
+                classBusyTime:
+                  type: array
+                  example: [4, 5, 6]
+
+  responses:
+    200:
+      description: Successfully update info
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            example: 'Successful'
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid class ID
+                example: Invalid class ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'
