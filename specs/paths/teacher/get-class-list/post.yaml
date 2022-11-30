@@ -1,0 +1,72 @@
+post:
+  summary: 19. Get class list of teacher
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            teacherId:
+              type: string
+              example: '0001'
+
+  responses:
+    200:
+      description: Successfully get class list of teacher
+      schema:
+        type: object
+        properties:
+          classList:
+            type: array
+            items:
+              type: object
+              properties:
+                classId:
+                  type: string
+                subjectId:
+                  type: string
+                subjectName:
+                  type: number
+                locationName:
+                  type: string
+                classBusyTime:
+                  type: array
+
+            example:
+              - classId: '789258'
+                subjectId: 'IT-3150'
+                subjectName: 'Database'
+                locationName: 'TC-209'
+                classBusyTime: [1,2,3]
+
+              - classId: '4526714'
+                subjectId: 'IT-4000'
+                subjectName: 'Web'
+                locationName: 'TC-210'
+                classBusyTime: [4,5,6]
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid class ID
+                example: Invalid class ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'

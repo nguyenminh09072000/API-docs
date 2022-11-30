@@ -1,0 +1,51 @@
+post:
+  summary: 23. Add student to class
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            studentId:
+              type: string
+              example: '20183592'
+            classId:
+              type: string
+              example: '789548'
+
+  responses:
+    200:
+      description: Successfully add student to class
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            description: Successfully add student to class
+            example: Successfully add student to class
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid class ID
+                example: Invalid class ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'

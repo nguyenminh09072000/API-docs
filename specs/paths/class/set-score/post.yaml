@@ -1,0 +1,59 @@
+post:
+  summary: 22. Set student score
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            studentId:
+              type: string
+              example: '20183592'
+            classId:
+              type: string
+              example: '987528'
+            score:
+              type: object
+              properties:
+                midterm:
+                  type: number
+                  example: 7
+                final:
+                  type: number
+                  example: 8
+
+  responses:
+    200:
+      description: Successfully set score
+      schema:
+        type: object
+        properties:
+          message:
+            type: string
+            example: 'Successful'
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid student ID
+                example: Invalid student ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'

@@ -1422,6 +1422,560 @@
           }
         }
       }
+    },
+    "/class/get-student-list": {
+      "post": {
+        "summary": "17. Get students list of class",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "classId": {
+                    "type": "string",
+                    "example": "975985"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get students list",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "studentList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "studentId": {
+                        "type": "string"
+                      },
+                      "studentName": {
+                        "type": "string"
+                      },
+                      "midterm": {
+                        "type": "number"
+                      },
+                      "final": {
+                        "type": "number"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "studentId": "20183592",
+                      "studentName": "Nguyen Nhat Minh",
+                      "midterm": 9,
+                      "final": 10
+                    },
+                    {
+                      "studentId": "20183593",
+                      "studentName": "Nguyen Van Nam",
+                      "midterm": 10,
+                      "final": 10
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/student/get-class-list": {
+      "post": {
+        "summary": "18. Get class list of student",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentId": {
+                    "type": "string",
+                    "example": "20183592"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully get class list of student",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "classList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "classId": {
+                        "type": "string"
+                      },
+                      "subjectId": {
+                        "type": "string"
+                      },
+                      "subjectName": {
+                        "type": "number"
+                      },
+                      "score": {
+                        "type": "object",
+                        "properties": {
+                          "midterm": {
+                            "type": "number"
+                          },
+                          "final": {
+                            "type": "number"
+                          }
+                        }
+                      },
+                      "locationName": {
+                        "type": "string"
+                      },
+                      "classBusyTime": {
+                        "type": "array"
+                      }
+                    }
+                  },
+                  "example": [
+                    {
+                      "classId": "789258",
+                      "subjectId": "IT-3150",
+                      "subjectName": "Database",
+                      "score": {
+                        "midterm": 10,
+                        "final": 9
+                      },
+                      "locationName": "TC-209",
+                      "classBusyTime": [
+                        1,
+                        2,
+                        3
+                      ]
+                    },
+                    {
+                      "classId": "4526714",
+                      "subjectId": "IT-4000",
+                      "subjectName": "Web",
+                      "score": {
+                        "midterm": 10,
+                        "final": 9
+                      },
+                      "locationName": "TC-210",
+                      "classBusyTime": [
+                        4,
+                        5,
+                        6
+                      ]
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/class/set-score": {
+      "post": {
+        "summary": "22. Set student score",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentId": {
+                    "type": "string",
+                    "example": "20183592"
+                  },
+                  "classId": {
+                    "type": "string",
+                    "example": "987528"
+                  },
+                  "score": {
+                    "type": "object",
+                    "properties": {
+                      "midterm": {
+                        "type": "number",
+                        "example": 7
+                      },
+                      "final": {
+                        "type": "number",
+                        "example": 8
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully set score",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Successful"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid student ID",
+                      "example": "Invalid student ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/class/delete-student": {
+      "post": {
+        "summary": "22. Delete student from class",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentId": {
+                    "type": "string",
+                    "example": "20183592"
+                  },
+                  "classId": {
+                    "type": "string",
+                    "example": "789548"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully delete student from class",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Successfully delete student from class",
+                  "example": "Successfully delete student from class"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/class/add-student": {
+      "post": {
+        "summary": "23. Add student to class",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "studentId": {
+                    "type": "string",
+                    "example": "20183592"
+                  },
+                  "classId": {
+                    "type": "string",
+                    "example": "789548"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully add student to class",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "Successfully add student to class",
+                  "example": "Successfully add student to class"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/location/get-free-location": {
+      "post": {
+        "summary": "24. Get list of free locations",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "credit": {
+                    "type": "number",
+                    "example": 2
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "List of free location",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "locationName": {
+                  "type": "string",
+                  "example": "TC-201"
+                },
+                "locationFreeTime": {
+                  "type": "array",
+                  "example": [
+                    10,
+                    11,
+                    12,
+                    40,
+                    41,
+                    42,
+                    43
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid class ID",
+                      "example": "Invalid class ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/location/get-class-in-location": {
+      "$ref": "paths/location/get-class-in-location/post.yaml"
     }
   },
   "responses": {

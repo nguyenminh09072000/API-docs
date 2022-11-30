@@ -65,3 +65,35 @@
     #16
   /class/delete:
     $ref: paths/class/delete/post.yaml
+
+    #17: DONE
+  /class/get-student-list:
+      $ref: paths/class/get-student-list/post.yaml
+
+    #18
+  /student/get-class-list:
+      $ref: paths/student/get-class-list/post.yaml
+
+    #19 : use 5
+#  /teacher/get-class-list:
+#      $ref: paths/teacher/get-class-list/post.yaml
+
+    #21 DONE
+  /class/set-score:
+      $ref: paths/class/set-score/post.yaml
+
+    #22
+  /class/delete-student:
+      $ref: paths/class/delete-student/post.yaml
+
+    #23
+  /class/add-student:
+      $ref: paths/class/add-student/post.yaml
+
+    #24
+  /location/get-free-location:
+    $ref: paths/location/get-free-location/post.yaml
+
+    #25
+  /location/get-class-in-location:
+    $ref: paths/location/get-class-in-location/post.yaml
