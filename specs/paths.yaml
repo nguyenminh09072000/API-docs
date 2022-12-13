@@ -1,38 +1,38 @@
 # STUDENT
-  #1
+  #1  DONE
   /student/get:
     $ref: paths/student/get/get.yaml
 
-  #2
+  #2  DONE
   /student/update:
     $ref: paths/student/update/post.yaml
 
-  #3
+  #3  DONE
   /student/create:
     $ref: paths/student/create/post.yaml
 
-  #4
+  #4  DONE
   /student/delete:
     $ref: paths/student/delete/post.yaml
 
 # Teacher
-  #5
+  #5  DONE
   /teacher/get:
     $ref: paths/teacher/get/get.yaml
 
-  #6
+  #6  DONE
   /teacher/update:
     $ref: paths/teacher/update/post.yaml
 
-  #7
+  #7  DONE
   /teacher/create:
     $ref: paths/teacher/create/post.yaml
 
-  #8
+  #8  DONE
   /teacher/delete:
     $ref: paths/teacher/delete/post.yaml
 
-# SUBJECT:
+# SUBJECT:  P.V.Nam
     #9
   /subject/get:
     $ref: paths/subject/get/get.yaml
@@ -50,50 +50,50 @@
     $ref: paths/subject/delete/post.yaml
 
 # CLASS
-    #13
+    #13   DONE
   /class/get:
     $ref: paths/class/get/get.yaml
 
-    #14
+    #14   DONE
   /class/update:
     $ref: paths/class/update/post.yaml
 
-    #15
+    #15   DONE
   /class/create:
     $ref: paths/class/create/post.yaml
 
-    #16
+    #16   DONE
   /class/delete:
     $ref: paths/class/delete/post.yaml
 
-    #17: DONE
+    #17:    DONE
   /class/get-student-list:
       $ref: paths/class/get-student-list/post.yaml
 
-    #18
+    #18  DONE
   /student/get-class-list:
       $ref: paths/student/get-class-list/post.yaml
 
-    #19 : use 5
-#  /teacher/get-class-list:
-#      $ref: paths/teacher/get-class-list/post.yaml
+    #19 :
+  /teacher/get-class-list:
+      $ref: paths/teacher/get-class-list/post.yaml
 
-    #21 DONE
+    #21   DONE
   /class/set-score:
       $ref: paths/class/set-score/post.yaml
 
-    #22
+    #22   DONE
   /class/delete-student:
       $ref: paths/class/delete-student/post.yaml
 
-    #23
+    #23   DONE
   /class/add-student:
       $ref: paths/class/add-student/post.yaml
 
-    #24
+    #24   DONE
   /location/get-free-location:
     $ref: paths/location/get-free-location/post.yaml
 
     #25
-  /location/get-class-in-location:
-    $ref: paths/location/get-class-in-location/post.yaml
+#  /location/get-class-in-location:
+#    $ref: paths/location/get-class-in-location/post.yaml
