@@ -1,11 +1,10 @@
 swagger: '2.0'
 info:
-  title: Game Service
+  title: Backend
   version: '1.0'
-  description: Game Service
-host: 'game-service.petgotchi.io'
+  description: Backend
+host: 'localhost:5000'
 schemes:
-  - https
   - http
 consumes:
   - application/json

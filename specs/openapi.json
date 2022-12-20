@@ -1,13 +1,12 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "Game Service",
+    "title": "Backend",
     "version": "1.0",
-    "description": "Game Service"
+    "description": "Backend"
   },
-  "host": "game-service.petgotchi.io",
+  "host": "localhost:5000",
   "schemes": [
-    "https",
     "http"
   ],
   "consumes": [
