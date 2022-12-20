@@ -23,9 +23,11 @@ post:
                             description: data update of student name
                             type: string
                             example: 'Nguyen Nhat Minh'
-                        accountId:
+                        username:
+                            description: Username
+                            required: true
                             type: string
-                            example: '6a5dfwegfdfgstheyqf'
+                            example: 'minh.nn183592@gmail.com'
 
     responses:
         200:
@@ -43,11 +45,11 @@ post:
                         required: true
                         type: string
                         example: 'Nguyen Nhat Minh'
-                    accountId:
-                        description: account Id
+                    username:
+                        description: Username
                         required: true
                         type: string
-                        example: '6a5dfwegfdfgstheyqf'
+                        example: 'minh.nn183592@gmail.com'
                     studentBusyTime:
                         type: array
                         example: []

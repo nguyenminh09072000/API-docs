@@ -23,9 +23,9 @@ post:
                             description: teacherName
                             type: string
                             example: 'Nguyen Van A'
-                        accountId:
+                        username:
                             type: string
-                            example: '6a5dfwegfdfgstheyqf'
+                            example: 'teacher1@gmail.com'
 
     responses:
         200:
@@ -41,9 +41,9 @@ post:
                         description: teacherName
                         type: string
                         example: 'Nguyen Van A'
-                    accountId:
+                    username:
                         type: string
-                        example: '6a5dfwegfdfgstheyqf'
+                        example: 'teacher1@gmail.com'
                     teacherBusyTime:
                         type: array
                         example: []

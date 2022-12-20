@@ -222,9 +222,11 @@
                     "type": "string",
                     "example": "Nguyen Nhat Minh"
                   },
-                  "accountId": {
+                  "username": {
+                    "description": "Username",
+                    "required": true,
                     "type": "string",
-                    "example": "6a5dfwegfdfgstheyqf"
+                    "example": "minh.nn183592@gmail.com"
                   }
                 }
               }
@@ -249,11 +251,11 @@
                   "type": "string",
                   "example": "Nguyen Nhat Minh"
                 },
-                "accountId": {
-                  "description": "account Id",
+                "username": {
+                  "description": "Username",
                   "required": true,
                   "type": "string",
-                  "example": "6a5dfwegfdfgstheyqf"
+                  "example": "minh.nn183592@gmail.com"
                 },
                 "studentBusyTime": {
                   "type": "array",
@@ -597,9 +599,9 @@
                     "type": "string",
                     "example": "Nguyen Van A"
                   },
-                  "accountId": {
+                  "username": {
                     "type": "string",
-                    "example": "6a5dfwegfdfgstheyqf"
+                    "example": "teacher1@gmail.com"
                   }
                 }
               }
@@ -622,9 +624,9 @@
                   "type": "string",
                   "example": "Nguyen Van A"
                 },
-                "accountId": {
+                "username": {
                   "type": "string",
-                  "example": "6a5dfwegfdfgstheyqf"
+                  "example": "teacher1@gmail.com"
                 },
                 "teacherBusyTime": {
                   "type": "array",
