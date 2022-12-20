@@ -1,0 +1,54 @@
+post:
+  summary: 26. Register
+  tags:
+    - Version 0.5
+
+  requestBody:
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            username:
+              type: string
+              example: 'minh.nn183592@gmail.com'
+            password:
+              type: string
+              example: '123456'
+            role:
+              required: true
+              type: string
+              example: 'student'
+
+  responses:
+    200:
+      description: Successfully create student
+      schema:
+        type: object
+        properties:
+          success:
+            type: boolean
+            example: true
+          message:
+            type: string
+            example: 'Register successfully'
+          accessToken:
+            type: string
+            example: 'yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY3MTUyMzUyMn0.p9A4DQfWpOCDUZpwesDyT-fbD7r_hgz-AqyLQCFCm'
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid username
+                example: Invalid username
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'

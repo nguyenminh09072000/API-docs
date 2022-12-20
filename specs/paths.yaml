@@ -95,5 +95,9 @@
     $ref: paths/location/get-free-location/post.yaml
 
     #25
-#  /location/get-class-in-location:
-#    $ref: paths/location/get-class-in-location/post.yaml
+  /auth/login:
+    $ref: paths/auth/login/post.yaml
+
+    #26
+  /auth/register:
+    $ref: paths/auth/register/post.yaml
