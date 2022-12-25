@@ -28,7 +28,16 @@ post:
                             required: true
                             type: string
                             example: 'minh.nn183592@gmail.com'
-
+                        birthday:
+                            required: true
+                            type: string
+                            example: '09-07-2000'
+                        gender:
+                            type: string
+                            example: male
+                        phone:
+                            type: string
+                            example: 0987547854
     responses:
         200:
             description: Successfully create student
@@ -50,6 +59,16 @@ post:
                         required: true
                         type: string
                         example: 'minh.nn183592@gmail.com'
+                    birthday:
+                        required: true
+                        type: string
+                        example: '09-07-2000'
+                    gender:
+                        type: string
+                        example: male
+                    phone:
+                        type: string
+                        example: 0987547854
                     studentBusyTime:
                         type: array
                         example: []

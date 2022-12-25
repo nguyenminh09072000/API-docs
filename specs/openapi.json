@@ -67,11 +67,24 @@
                   "type": "string",
                   "example": "Nguyen Nhat Minh"
                 },
-                "accountId": {
-                  "description": "account Id",
+                "username": {
+                  "description": "Username",
                   "required": true,
                   "type": "string",
-                  "example": "asdf34t245yhtyene"
+                  "example": "minh.nn183592@gmail.com"
+                },
+                "birthday": {
+                  "required": true,
+                  "type": "string",
+                  "example": "09-07-2000"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "0987547854"
                 },
                 "studentBusyTime": {
                   "type": "array",
@@ -226,6 +239,19 @@
                     "required": true,
                     "type": "string",
                     "example": "minh.nn183592@gmail.com"
+                  },
+                  "birthday": {
+                    "required": true,
+                    "type": "string",
+                    "example": "09-07-2000"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "example": "male"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "0987547854"
                   }
                 }
               }
@@ -255,6 +281,19 @@
                   "required": true,
                   "type": "string",
                   "example": "minh.nn183592@gmail.com"
+                },
+                "birthday": {
+                  "required": true,
+                  "type": "string",
+                  "example": "09-07-2000"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "0987547854"
                 },
                 "studentBusyTime": {
                   "type": "array",
@@ -410,11 +449,22 @@
                   "type": "string",
                   "example": "Pham Van Hai"
                 },
-                "accountId": {
-                  "description": "account Id",
+                "username": {
+                  "type": "string",
+                  "example": "hai.pv@gmail.com"
+                },
+                "birthday": {
                   "required": true,
                   "type": "string",
-                  "example": "asdf34t245yhtyene"
+                  "example": "09-07-2000"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "0987547854"
                 },
                 "teacherBusyTime": {
                   "type": "array",
@@ -601,6 +651,19 @@
                   "username": {
                     "type": "string",
                     "example": "teacher1@gmail.com"
+                  },
+                  "birthday": {
+                    "required": true,
+                    "type": "string",
+                    "example": "09-07-2000"
+                  },
+                  "gender": {
+                    "type": "string",
+                    "example": "male"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "0987547854"
                   }
                 }
               }
@@ -626,6 +689,19 @@
                 "username": {
                   "type": "string",
                   "example": "teacher1@gmail.com"
+                },
+                "birthday": {
+                  "required": true,
+                  "type": "string",
+                  "example": "09-07-2000"
+                },
+                "gender": {
+                  "type": "string",
+                  "example": "male"
+                },
+                "phone": {
+                  "type": "string",
+                  "example": "0987547854"
                 },
                 "teacherBusyTime": {
                   "type": "array",
