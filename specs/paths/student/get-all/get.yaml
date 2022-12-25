@@ -1,0 +1,71 @@
+get:
+  summary: 27. Get all students
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+
+  responses:
+    200:
+      description: Successfully get all students info
+      schema:
+        type: object
+        properties:
+          studentList:
+            type: array
+            items:
+              type: object
+              properties:
+                studentId:
+                  description: Student ID
+                  required: true
+                  type: string
+                  example: '20183592'
+                studentName:
+                  description: Student Name
+                  required: true
+                  type: string
+                  example: 'Nguyen Nhat Minh'
+                username:
+                  description: Username
+                  required: true
+                  type: string
+                  example: 'minh.nn183592@gmail.com'
+                birthday:
+                  required: true
+                  type: string
+                  example: '09-07-2000'
+                gender:
+                  type: string
+                  example: male
+                phone:
+                  type: string
+                  example: 0987547854
+                studentBusyTime:
+                  type: array
+                  example: [1,2,3,10,11,12]
+                classes:
+                  type: array
+                  example: ['000001','000002']
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid student ID
+                example: Invalid student ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'

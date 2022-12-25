@@ -1,0 +1,78 @@
+get:
+  summary: 28. Get all teachers
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+
+  responses:
+    200:
+      description: Successfully get all teachers info
+      schema:
+        type: object
+        properties:
+          teacherList:
+            type: array
+            items:
+              type: object
+              properties:
+                teacherId:
+                  type: string
+                  example: '0001'
+                teacherName:
+                  type: string
+                  example: 'Pham Van Hai'
+                username:
+                  type: string
+                  example: 'hai.pv@gmail.com'
+                birthday:
+                  required: true
+                  type: string
+                  example: '09-07-2000'
+                gender:
+                  type: string
+                  example: male
+                phone:
+                  type: string
+                  example: 0987547854
+                teacherBusyTime:
+                  type: array
+                  example: [1, 2, 3, 10, 11, 12]
+                teacherClasses:
+                  type: array
+                  items:
+                    classId:
+                      type: string
+                    subjectId:
+                      type: string
+                    locationName:
+                      type: string
+                    classBusyTime:
+                      type: array
+                  example:
+                    - classId: "589584"
+                      subjectId: "IT3150"
+                      locationName: "TC-101"
+                      classBusyTime: [1, 2, 3]
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid student ID
+                example: Invalid student ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'

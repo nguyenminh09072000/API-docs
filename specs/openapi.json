@@ -2323,6 +2323,238 @@
           }
         }
       }
+    },
+    "/student/get-all": {
+      "get": {
+        "summary": "27. Get all students",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get all students info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "studentList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "studentId": {
+                        "description": "Student ID",
+                        "required": true,
+                        "type": "string",
+                        "example": "20183592"
+                      },
+                      "studentName": {
+                        "description": "Student Name",
+                        "required": true,
+                        "type": "string",
+                        "example": "Nguyen Nhat Minh"
+                      },
+                      "username": {
+                        "description": "Username",
+                        "required": true,
+                        "type": "string",
+                        "example": "minh.nn183592@gmail.com"
+                      },
+                      "birthday": {
+                        "required": true,
+                        "type": "string",
+                        "example": "09-07-2000"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "male"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": "0987547854"
+                      },
+                      "studentBusyTime": {
+                        "type": "array",
+                        "example": [
+                          1,
+                          2,
+                          3,
+                          10,
+                          11,
+                          12
+                        ]
+                      },
+                      "classes": {
+                        "type": "array",
+                        "example": [
+                          "000001",
+                          "000002"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid student ID",
+                      "example": "Invalid student ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
+    },
+    "/teacher/get-all": {
+      "get": {
+        "summary": "28. Get all teachers",
+        "tags": [
+          "Version 0.5"
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Authorization",
+            "type": "string",
+            "required": true,
+            "description": "Access token"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get all teachers info",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "teacherList": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "teacherId": {
+                        "type": "string",
+                        "example": "0001"
+                      },
+                      "teacherName": {
+                        "type": "string",
+                        "example": "Pham Van Hai"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "hai.pv@gmail.com"
+                      },
+                      "birthday": {
+                        "required": true,
+                        "type": "string",
+                        "example": "09-07-2000"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "male"
+                      },
+                      "phone": {
+                        "type": "string",
+                        "example": "0987547854"
+                      },
+                      "teacherBusyTime": {
+                        "type": "array",
+                        "example": [
+                          1,
+                          2,
+                          3,
+                          10,
+                          11,
+                          12
+                        ]
+                      },
+                      "teacherClasses": {
+                        "type": "array",
+                        "items": {
+                          "classId": {
+                            "type": "string"
+                          },
+                          "subjectId": {
+                            "type": "string"
+                          },
+                          "locationName": {
+                            "type": "string"
+                          },
+                          "classBusyTime": {
+                            "type": "array"
+                          }
+                        },
+                        "example": [
+                          {
+                            "classId": "589584",
+                            "subjectId": "IT3150",
+                            "locationName": "TC-101",
+                            "classBusyTime": [
+                              1,
+                              2,
+                              3
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "description": "Invalid student ID",
+                      "example": "Invalid student ID"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "500": {
+            "$ref": "#/responses/500"
+          }
+        }
+      }
     }
   },
   "responses": {

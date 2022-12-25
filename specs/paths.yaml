@@ -101,3 +101,11 @@
     #26
   /auth/register:
     $ref: paths/auth/register/post.yaml
+
+    #27
+  /student/get-all:
+    $ref: paths/student/get-all/get.yaml
+
+    #28
+  /teacher/get-all:
+    $ref: paths/teacher/get-all/get.yaml
