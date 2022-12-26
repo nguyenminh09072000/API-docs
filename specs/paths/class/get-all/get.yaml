@@ -1,0 +1,56 @@
+get:
+  summary: 29. Get all class
+  tags:
+    - Version 0.5
+  parameters:
+    - in: header
+      name: Authorization
+      type: string
+      required: true
+      description: Access token
+
+
+  responses:
+    200:
+      description: Successfully get class info
+      schema:
+        type: object
+        properties:
+          classId:
+            required: true
+            type: string
+            example: '789248'
+          subjectId:
+            required: true
+            type: string
+            example: 'IT3505'
+          subjectName:
+            required: true
+            type: string
+            example: 'Database'
+          teacherName:
+            type: string
+            example: 'Nguyen Van A'
+          locationName:
+            type: string
+            example: 'TC-209'
+          classBusyTime:
+            type: array
+            example: [1,2,3,10,11,12]
+
+    400:
+      description: Bad request
+      schema:
+        type: object
+        properties:
+          error:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Invalid class ID
+                example: Invalid class ID
+    404:
+      $ref: '#/responses/404'
+    500:
+      $ref: '#/responses/500'
